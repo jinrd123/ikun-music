@@ -35,4 +35,42 @@
       <text>直播</text>
     </view>
   </view>
+  <!-- 推荐歌曲区域 -->
+  <view class="recommendContainer">
+    <view class="header">
+      <text class="title">推荐歌曲</text>
+      <view class="recommendAndMore">
+        <text>为你精心推荐</text>
+        <text>查看更多</text>
+      </view>
+    </view>
+  </view>
+  <!-- 推荐歌曲内容区 -->
+  <!-- enable-flex属性使scroll标签的flex布局生效;scroll-x属性让scroll标签可以横向滑动 -->
+  <scroll-view class="recommendScroll" enable-flex scroll-x>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我,我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+    <view class="scrollItem">
+      <image src="/static/images/nvshen.jpg" />
+      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    </view>
+  </scroll-view>
 </view>

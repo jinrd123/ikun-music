@@ -41,3 +41,34 @@ app.wxss全局引入样式
   2. 在app.wxss中引入图标代码为全局所用：`@import "/static/iconfont/iconfont.wxss";`
   3. 给相应标签添加iconfont类和与图标符号对应的类名：`<text class="iconfont icon-tuijian"></text>`
 
+# third commit
+
+## 1.单行文本溢出隐藏（省略号代替）
+
+给需要单行文本溢出的**块级元素**添加样式：
+
+(非块级元素大小由内容决定，不会有文本溢出情况，overflow:hidden失效)
+
+~~~css
+.block {
+    /*非块级元素需设置为块级元素*/
+    display: block;
+    /*设置文本不换行*/
+	white-space: nowrap;
+    /*溢出部分隐藏*/
+    overflow: hidden;
+    /*隐藏内容用省略号代替*/
+    text-overflow: ellipsis;
+}
+~~~
+
+## 2.多行文本溢出
+
+~~~css
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+~~~
+
