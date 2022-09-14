@@ -1,4 +1,5 @@
 <view class="indexContainer">
+  <!-- 轮播图 -->
   <!-- indicator-dots设置指示点；indicator-color设置指示点颜色；indicator-active-color设置选中指示点颜色 -->
   <swiper class="banners" indicator-dots="true" indicator-color="ivory" indicator-active-color="#d43c33">
     <swiper-item>
@@ -11,4 +12,27 @@
       <image src="/static/images/nvshen.jpg" class="test"></image>
     </swiper-item>
   </swiper>
+  <!-- 五个图标导航区域 -->
+  <view class="navContainer">
+    <view class="navItem">
+      <text class="iconfont icon-tuijian"></text>
+      <text>每日推荐</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-gedan"></text>
+      <text>歌单</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-paixingbang"></text>
+      <text>排行榜</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-diantai"></text>
+      <text>电台</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-zhibo"></text>
+      <text>直播</text>
+    </view>
+  </view>
 </view>
