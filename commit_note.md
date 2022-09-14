@@ -11,3 +11,20 @@ app.json:
 	"navigationBarTitleText": "硅谷云音乐"
 }
 ~~~
+
+# second commit
+
+1.轮播图基本结构
+
+~~~js
+  <swiper>
+    <swiper-item>
+      ...
+    </swiper-item>
+	...
+    <swiper-item>
+      ...
+    </swiper-item>
+  </swiper>
+~~~
+
