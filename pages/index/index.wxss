@@ -72,7 +72,7 @@
 
 /* 排行榜 */
 .topListSwiper {
-  height: 400rpx;
+  height: 450rpx;
 }
 
 .topList {
