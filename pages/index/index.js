@@ -7,6 +7,7 @@ Page({
   data: {
     banners: [],
     recommendList: [],
+    topList: [],//排行榜数据
   },
 
   /**
@@ -21,6 +22,20 @@ Page({
     this.setData({
       recommendList: recommendListData.result,
     })
+    // 获取排行榜数据
+    let resultArr = [];
+    for(let i = 0;i < 5;i ++) {
+      let topListData = await request('/top/list', {idx: i});
+      let topListItem = {name: topListData.playlist.name, tracks: topListData.playlist.tracks.slice(0,3)};
+      resultArr.push(topListItem);
+      this.setData({//在这里发送请求增加用户体验，但会增加渲染次数
+        topList: resultArr,
+      })
+    }
+    // this.setData({
+    //   topList: resultArr,
+    // })
+    // //在这里发送请求会导致请求完成之前页面白屏时间过长，用户体验差
   },
 
   /**

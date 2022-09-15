@@ -280,3 +280,11 @@ async onLoad(options) {
 * circular：循环轮播
 * next-margin：看见下一个swiper-item的一部分
 * previous-margin：看见上一个swiper-item的一部分
+
+# tenth commit
+
+## 1.排行榜部分动态展示
+
+## 2.防止音乐名字过长出现挤压同级的元素（图片），用到css属性`max-width`
+
+## 3.请求排行榜数据需要五次请求，把更新数据放在for循环的内部，这样不用等到全部请求完毕再呈现页面，防止白屏时间过长。

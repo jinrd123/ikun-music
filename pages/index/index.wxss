@@ -110,5 +110,11 @@
 .musicItem .musicName {
   height: 100rpx;
   line-height: 100rpx;
+  max-width: 350rpx;/*防止歌名过长挤压图片*/
+  /* 单行文本溢出隐藏 */
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
