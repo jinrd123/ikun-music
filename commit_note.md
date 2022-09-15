@@ -294,3 +294,45 @@ async onLoad(options) {
 真机调试请求失败问题
 
 解决方案：项目请求的地址修改为真实的ipv4地址，而不用localhost，然后手机连接局域网。
+
+解决方案2：使用内网穿透工具uTools
+
+# twelfth commit
+
+1.tabBar（页面切换导航栏）的使用：
+
+在app.json中配置tabBar：
+
+* color：底部字体颜色---必选配置
+* selectedColor：选中后字体颜色---必选配置
+* backgroundColor：导航栏背景颜色---必选配置
+* list：2-5个导航选项---必选配置
+
+~~~js
+"tabBar": {
+  "color": "#333", 
+  "selectedColor": "#d43c33",
+  "backgroundColor": "#fff",
+  "list": [ 
+    {
+      "pagePath": "pages/index/index",
+      "text": "主页",
+      "iconPath": "/static/images/tabs/tab-home.png",
+      "selectedIconPath": "/static/images/tabs/tab-home-current.png"
+    },
+    {
+      "pagePath": "pages/video/video",
+      "text": "视频",
+      "iconPath": "/static/images/tabs/select.png",
+      "selectedIconPath": "/static/images/tabs/selected.png"
+    },
+    {
+      "pagePath": "pages/personal/personal",
+      "text": "个人中心",
+      "iconPath": "/static/images/tabs/tab-my.png",
+      "selectedIconPath": "/static/images/tabs/tab-my-current.png"
+    }
+  ]
+}
+~~~
+
