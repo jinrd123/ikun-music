@@ -266,3 +266,17 @@ async onLoad(options) {
    ~~~
 
 ## 2.bug修复：scroll-view需要手动指定高度，否则即使设置了横向排列还是会按竖向排列计算高度（高度过高）
+
+# ninth commit
+
+## 1.排行榜部分静态搭建
+
+排行榜部分选择swiper而非scroll-view因为轮播图是逐帧滑动的，而滑窗不被限制滑动幅度，排行榜部分需要逐帧滑动。
+
+用到了swiper的一些配置属性：
+
+`<swiper class="topListSwiper" circular="true" next-margin="50rpx" previous-margin="50rpx">`
+
+* circular：循环轮播
+* next-margin：看见下一个swiper-item的一部分
+* previous-margin：看见上一个swiper-item的一部分

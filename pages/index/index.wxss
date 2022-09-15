@@ -69,3 +69,46 @@
 .scrollContainer {
   margin-right: 20rpx;
 }
+
+/* 排行榜 */
+.topListSwiper {
+  height: 400rpx;
+}
+
+.topList {
+  padding: 20rpx;
+}
+
+.swiperItem {
+  width: 96%;
+  background-color: #fbfbfb;
+}
+
+.swiperItem .title {
+  font-size: 30rpx;
+  line-height: 80rpx;
+}
+
+.musicItem image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
+}
+
+.musicItem .count {
+  width: 100rpx;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.musicItem {
+  display: flex;/*让.count的水平垂直居中代码生效，因为父元素flex子元素自动变为block*/
+  margin-bottom: 20rpx;
+}
+
+.musicItem .musicName {
+  height: 100rpx;
+  line-height: 100rpx;
+}
+

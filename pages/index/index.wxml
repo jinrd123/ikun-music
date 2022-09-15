@@ -44,5 +44,68 @@
   <!-- 排行榜区域 -->
   <view class="topList">
     <NavHeader title="排行榜" nav="热歌风向标"></NavHeader>
+    <!-- 内容区域 -->
+    <swiper class="topListSwiper" circular="true" next-margin="50rpx"	previous-margin="50rpx">
+      <swiper-item>
+        <view class="swiperItem">
+          <view class="title">云音乐热歌榜</view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">1</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">2</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">3</text>
+            <text class="musicName">及你太美</text>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="swiperItem">
+          <view class="title">云音乐热歌榜</view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">1</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">2</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">3</text>
+            <text class="musicName">及你太美</text>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="swiperItem">
+          <view class="title">云音乐热歌榜</view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">1</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">2</text>
+            <text class="musicName">及你太美</text>
+          </view>
+          <view class="musicItem">
+            <image src="/static/images/nvshen.jpg" />
+            <text class="count">3</text>
+            <text class="musicName">及你太美</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
   </view>
 </view>
