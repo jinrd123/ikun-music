@@ -12,7 +12,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    wx.request({
+      url: 'http://localhost:3000/banner',
+      data: {type: 2},
+      success(res) {
+        console.log('请求成功：', res);
+      },
+      fail(err) {
+        console.log("请求失败：", err);
+      }
+    })
   },
 
   /**

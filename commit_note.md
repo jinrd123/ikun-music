@@ -72,3 +72,26 @@ display: -webkit-box;
 -webkit-line-clamp: 2;
 ~~~
 
+# fourth commit
+
+小程序的运行环境不同于浏览器，会自动用当前项目路径补全请求路径，所以小程序发请求时需要写全路径。
+
+小程序的发请求的服务器必须去官网设置，因为我们本地的localhost默认提供http协议，而非https，所以不满足小程序的服务器协议要求，我们只需在开发者工具中设置不校验合法协议即可。
+
+在index组件的index.js中发送请求获取轮播图数据
+
+~~~js
+onLoad(options) {
+    wx.request({
+        url: 'http://localhost:3000/banner',
+        data: {type: 2},
+        success(res) {
+            console.log('请求成功：', res);
+        },
+        fail(err) {
+            console.log("请求失败：", err);
+        }
+    })
+},
+~~~
+
