@@ -95,3 +95,111 @@ onLoad(options) {
 },
 ~~~
 
+# fifth commit
+
+## 1.封装wx.request
+
+创建utils（utility：实用工具）文件夹，在request.js中封装`wx.request`请求。
+
+~~~js
+export default (url, data = {}, method = 'GET') => {
+    wx.request({
+        url,
+        data,
+        method,
+        success(res) {
+            console.log('请求成功：', res);
+        },
+        fail(err) {
+            console.log("请求失败：", err);
+        }
+    })
+}
+~~~
+
+想拿到请求结果，如果在封装的函数体中`return`会拿到undefined，因为`wx.request`是异步代码。**错误示例**如下：
+
+~~~js
+export default (url, data = {}, method = 'GET') => {
+    let result;
+    wx.request({
+        url,
+        data,
+        method,
+        success(res) {
+            console.log('请求成功：', res);
+            result = res;
+        },
+        fail(err) {
+            console.log("请求失败：", err);
+            result = err;
+        }
+    })
+    return result;
+}
+~~~
+
+解决方案：要想获得异步代码的结果，我们可以用`async`函数的`await`，所以我们在封装请求函数时把`wx.request`放在promise的执行器中，并把请求到的数据作为promise成功或失败的理由，这样便可以用`await`在组件中获取到请求的结果。
+
+~~~js
+export default (url, data = {}, method = 'GET') => {
+    return new Promise((resolve,reject)=>{
+        wx.request({
+            url,
+            data,
+            method,
+            success(res) {
+                console.log('请求成功：', res);
+                resolve(res.data);
+            },
+            fail(err) {
+                console.log("请求失败：", err);
+                reject(err);
+            }
+        })
+    })
+}
+//组件中：
+async onLoad(options) {
+    let result = await request('http://localhost:3000/banner', {type: 2});
+    console.log('结果数据：',result);
+},
+~~~
+
+为了继续解耦（提取发请求服务器信息）：创建/utils/config.js:
+
+~~~js
+//配置服务器相关信息
+export default {
+    host: 'http://localhost:3000'
+}
+~~~
+
+修改请求函数：
+
+~~~js
+import config from './config';
+export default (url, data = {}, method = 'GET') => {
+    return new Promise((resolve,reject)=>{
+        wx.request({
+            url: config.host + url;
+            data,
+            method,
+            success(res) {
+                console.log('请求成功：', res);
+                resolve(res.data);
+            },
+            fail(err) {
+                console.log("请求失败：", err);
+                reject(err);
+            }
+        })
+    })
+}
+//组件中：
+async onLoad(options) {
+    let result = await request('/banner', {type: 2});
+    console.log('结果数据：',result);
+},
+~~~
+
