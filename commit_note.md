@@ -232,3 +232,37 @@ async onLoad(options) {
 </scroll-view>
 ~~~
 
+# eighth commit
+
+## 1.提取推荐歌曲和排行榜的头部部分为全局组件
+
+1. 创建组件：/components/NavHeader，提取结构与样式
+
+2. 页面的json文件中注册组件：
+
+   ~~~js
+   {
+     "usingComponents": {
+       "NavHeader": "/components/NavHeader/NavHeader"
+     }
+   }
+   ~~~
+
+3. 页面中使用组件并选择性传递props数据，组件中使用properties配置项接收，组件结构中使用插值语法使用properties接受的数据即可。
+
+   `<NavHeader title="排行榜" nav="热歌风向标"></NavHeader>`
+
+   ~~~js
+   properties: {
+       title: {
+           type:String,
+           value: "title默认值"
+       },
+       nav: {
+           type:String,
+           value: "nav默认值"
+       }
+   },
+   ~~~
+
+## 2.bug修复：scroll-view需要手动指定高度，否则即使设置了横向排列还是会按竖向排列计算高度（高度过高）
