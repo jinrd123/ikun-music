@@ -216,3 +216,19 @@ async onLoad(options) {
 ~~~
 
 `wx:key`自动访问item中的属性，无需用插值语法
+
+# seventh commit
+
+## 1.推荐歌曲部分动态渲染--列表渲染自定义遍历项的名称
+
+考虑到避免嵌套情况的`wx:for`遍历项都是`item`，可以使用`wx:for-item`指定遍历项的名称
+
+~~~html
+<scroll-view class="recommendScroll" enable-flex scroll-x>
+    <view class="scrollItem" wx:for="{{recommendList}}" wx:key="id" wx:for-item="recommendItem">
+        <image src="{{recommendItem.picUrl}}" />
+        <text>{{recommendItem.name}}</text>
+    </view>
+</scroll-view>
+~~~
+

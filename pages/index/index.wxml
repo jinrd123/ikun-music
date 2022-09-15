@@ -42,29 +42,9 @@
   <!-- 推荐歌曲内容区 -->
   <!-- enable-flex属性使scroll标签的flex布局生效;scroll-x属性让scroll标签可以横向滑动 -->
   <scroll-view class="recommendScroll" enable-flex scroll-x>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我,我喜欢猪八戒，猪八戒也喜欢我</text>
-    </view>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
-    </view>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
-    </view>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
-    </view>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
-    </view>
-    <view class="scrollItem">
-      <image src="/static/images/nvshen.jpg" />
-      <text>我喜欢猪八戒，猪八戒也喜欢我</text>
+    <view class="scrollItem" wx:for="{{recommendList}}" wx:key="id" wx:for-item="recommendItem">
+      <image src="{{recommendItem.picUrl}}" />
+      <text>{{recommendItem.name}}</text>
     </view>
   </scroll-view>
 </view>
