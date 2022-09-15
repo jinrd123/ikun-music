@@ -2,14 +2,8 @@
   <!-- 轮播图 -->
   <!-- indicator-dots设置指示点；indicator-color设置指示点颜色；indicator-active-color设置选中指示点颜色 -->
   <swiper class="banners" indicator-dots="true" indicator-color="ivory" indicator-active-color="#d43c33">
-    <swiper-item>
-      <image src="/static/images/nvshen.jpg" class="test"></image>
-    </swiper-item>
-    <swiper-item>
-      <image src="/static/images/nvshen.jpg" class="test"></image>
-    </swiper-item>
-    <swiper-item>
-      <image src="/static/images/nvshen.jpg" class="test"></image>
+    <swiper-item wx:for="{{banners}}" wx:key="bannerId">
+      <image src="{{item.pic}}"></image>
     </swiper-item>
   </swiper>
   <!-- 五个图标导航区域 -->

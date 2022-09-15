@@ -5,15 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    banners: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    let result = await request('/banner', {type: 2});
-    console.log('结果数据：',result);
+    let bannersData = await request('/banner', {type: 2});
+    this.setData({
+      banners: bannersData.banners,
+    })
   },
 
   /**

@@ -203,3 +203,16 @@ async onLoad(options) {
 },
 ~~~
 
+# sixth commit
+
+## 1.轮播图列表渲染
+
+`wx:for="{{}}"`：{{}}插值语法里直接访问需要遍历的对象（数组）,默认遍历的项为`item`，下标为`index`
+
+~~~html
+<swiper-item wx:for="{{banners}}" wx:key="bannerId">
+    <image src="{{item.pic}}"></image>
+</swiper-item>
+~~~
+
+`wx:key`自动访问item中的属性，无需用插值语法
