@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    phone: '',//手机号
+    password: ''//密码
   },
 
   /**
@@ -15,6 +16,13 @@ Page({
 
   },
 
+  handleInput(event) {
+    let type = event.currentTarget.id;//这里不牵扯事件委派，完全等价于用event.target
+    this.setData({
+      //id值于data中的key值相同，直接通过id值修改data对象
+      [type]: event.detail.value,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

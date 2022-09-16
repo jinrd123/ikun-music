@@ -423,3 +423,106 @@ login.json：（全局配置app.json中"navigationBarTitleText"配置项属于"w
 ~~~
 
 2.登录页面静态页面的搭建
+
+# sixteenth commit
+
+## 知识点
+
+### 登录功能流程
+
+1. 收集表单数据
+2. 前端验证
+   1. 验证用户信息（账号，密码）是否合法
+   2. 前端验证如果不通过就提示用户，不需要发请求给后端
+   3. 前端验证通过了，发请求（携带账号、密码）给服务器端
+3. 后端验证
+   1. 验证用户是否存在
+   2. 用户不存在直接返回，告诉前端用户不存在
+   3. 用户存在再验证密码是否正确
+   4. 密码不正确返回给前端提示密码不正确
+   5. 密码正确返回给前端数据（携带用户相关信息），提示用户登陆成功
+
+
+
+### 事件回调函数的event事件对象有两个属性
+
+* target
+* currentTarget
+
+他们的区别在于：event.target是指真正触发事件的那个元素，而event.currentTarget是指绑定了回调函数的那个元素，也就是说在事件委托时，我们需要用event.target去访问真正触发事件的元素，而event.currentTarget只能访问到设置回调函数的事件委托给的父元素。
+
+
+
+### 事件委托
+
+1. 什么是事件委托
+   1. 将子元素的事件委托给父元素
+2. 事件委托的好处
+   1. 减少绑定的次数
+   2. 后期新添加的元素也可以享用到之前委托的事件
+3. 事件委托的原理
+   1. 事件冒泡：子元素触发事件，冒泡冒到父元素上
+4. 如何找到是哪一个子元素触发了事件
+   1. event.target
+
+
+
+### 对象内部用变量代替key值&&对象外部用变量代替key
+
+~~~js
+let params = "objKey";
+let obj = {
+    [params]:"objValue",//对象内部用变量代替key值
+}
+console.log(obj);//{"objKey":"objValue"}
+console.log(obj[params]);//objValue---对象外部用变量代替key
+~~~
+
+
+
+### 组件的`id`属性于`data-key`属性区别：
+
+都是用来给元素添加标识的，但是一个元素id属性只有一个，通过event.target.id访问；我们可以通过data-key给元素添加多个自定义属性，通过event.target.dataset来访问自定义属性对象（属性集合）
+
+
+
+## 本次提交完成内容
+
+### 1.完成表单数据的收集
+
+配置data：
+
+~~~js
+data: {
+  phone: '',//手机号
+  password: ''//密码
+},
+~~~
+
+给两个input绑定相同的bindinput的回调函数，用一个回调函数处理phone和password的修改（当然也可以绑定两个不同的回调函数，分别修改data中的phone和password）
+
+~~~html
+<view class="input-item">
+    <text class="tit">手机号码</text>
+    <input  type="text" placeholder="请输入手机号码" id="phone" bindinput="handleInput"/>
+</view>
+<view class="input-item">
+    <text class="tit">密码</text>
+    <input type="password"  placeholder="请输入密码" id="password" bindinput="handleInput"/>
+</view>
+~~~
+
+回调函数可以通过`event.detail.value`访问表单的新数据，目前的问题就是如何区别是哪一个表单数据发生改变：我们给手机号和密码对应的input设置`id`属性，给手机号input设置id=”phone“，密码input设置id=”password“（与data中的key相同），这样我们就可以在回调函数中通过`event.currentTarget.id`区别是哪一个input触发了输入事件，然后直接用**对象内部用变量代替key值**的语法修改data中的数据即可
+
+~~~js
+handleInput(event) {
+    let type = event.currentTarget.id;//这里不牵扯事件委派，完全等价于用event.target
+    this.setData({
+        //id值于data中的key值相同，直接通过id值修改data对象
+        [type]:event.detail.value,
+    })
+}
+~~~
+
+这样就实现了对表单数据的收集，我们除了利用id这个属性来区别哪一个input之外，还可以用自定义属性`data-key=value`，比如给input添加属性：`data-type="phone"`，那么可以通过`event.currentTarget.dataset.type`访问到”phone“
+
