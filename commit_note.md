@@ -339,3 +339,74 @@ async onLoad(options) {
 # thirteenth commit
 
 个人中心页静态页面搭建
+
+# fourteenth commit
+
+## 1.给个人中心页下半部分添加拖动下滑动画效果
+
+我们让个人中心下半部分页面可以向下拖动一小段距离，并且会慢慢回弹
+
+首先监听个人中心下半部分结构的手指操作事件：
+
+* `bindtouchstart`：手指接触事件
+* `bindtouchmove`：手指接触移动事件
+* `bindtouchend`：手指离开事件
+
+我们想用移动事件得到的手指位置与接触事件获得的手指位置做差来计算手指移动的距离，然后用transform属性配合移动距离控制元素位置，并在回弹时添加过渡效果：
+
+~~~html
+<view 
+    class="cover-container"
+    bindtouchstart="handleTouchStart"
+    bindtouchmove="handleTouchMove"
+    bindtouchend="handleTouchEnd"
+    style="transform:{{coverTransform}}; transition:{{coverTransition}}"
+>
+~~~
+
+但这里存在`bindtouchstart`和`bindtouchmove`的回调函数位于pages配置对象的同一级的情况（两者获得的位置数据无法互相访问），所以在personal.js中定义与pages同级的变量作为计算用的中间变量，目的是**让它们作为全局变量让pages中的不同回调函数共同访问，配合计算。**
+
+~~~js
+let startY = 0;//手指起始坐标
+let moveY = 0;//手指移动过程中的坐标
+let moveDistance = 0;//手指移动的距离
+pages({...
+})
+~~~
+
+监听回调函数需要借助`event`事件对象，里面的`touches`手指数组存放所有的手指触碰信息，`touches[0]`就是第一个手指，手指的`clientY`属性代表手指距离屏幕最上方的位置。
+
+~~~js
+handleTouchStart(event) {
+  //下拉时需要清除曾经添加的过渡效果
+  this.setData({
+    coverTransition: '',
+  })
+  //获取手指起始坐标
+  startY = event.touches[0].clientY;//第一个手指的垂直坐标（屏幕顶部clientY为0）
+},
+handleTouchMove(event) {
+  moveY = event.touches[0].clientY;
+  moveDistance = moveY - startY;
+  //不可向上移动
+  if(moveDistance <= 0) {
+    return;
+  }
+  //最多向下移动限制
+  if(moveDistance >= 80) {
+    moveDistance = 80;
+  }
+  //动态更新coverTransform的值，从而引起元素样式的变化
+  this.setData({
+    coverTransform: `translateY(${moveDistance}rpx)`,
+  })
+},
+handleTouchEnd() {
+  //手指离开复原元素位置并添加过渡效果
+  this.setData({
+    coverTransform: `translateY(0rpx)`,
+    coverTransition: 'transform 0.5s linear',
+  })
+},
+~~~
+
