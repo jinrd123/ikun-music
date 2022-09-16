@@ -336,3 +336,6 @@ async onLoad(options) {
 }
 ~~~
 
+# thirteenth commit
+
+个人中心页静态页面搭建
