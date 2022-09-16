@@ -410,3 +410,16 @@ handleTouchEnd() {
 },
 ~~~
 
+# fifiteenth commit
+
+1.创建登录页面--login，并配置顶部标题为“登录”。
+
+login.json：（全局配置app.json中"navigationBarTitleText"配置项属于"windows"对象）
+
+~~~js
+{
+  "navigationBarTitleText": "登录"
+}
+~~~
+
+2.登录页面静态页面的搭建
