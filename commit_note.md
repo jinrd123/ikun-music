@@ -526,3 +526,102 @@ handleInput(event) {
 
 这样就实现了对表单数据的收集，我们除了利用id这个属性来区别哪一个input之外，还可以用自定义属性`data-key=value`，比如给input添加属性：`data-type="phone"`，那么可以通过`event.currentTarget.dataset.type`访问到”phone“
 
+# seventeenth commit
+
+## 1.前端验证
+
+手机号验证
+
+1. 内容为空
+2. 手机号格式不正确：第一位“1”，第二位“3”-“9”，剩下9位任意数字
+3. 手机号格式正确
+
+提示信息用`wx.showToast({title:'要提示的文本',...})`。(微信环境下的wx.showToast类似于浏览器环境下的window.alert)
+
+首先给登录按钮绑定点击事件--->bindtap：`<button class="confirm-btn" bindtap="login">登录</button>`
+
+~~~js
+login() {
+  let {phone, password} = this.data;
+  if(!phone) {//如果手机号为空
+    wx.showToast({
+      title: '手机号不能为空',
+      icon: 'none'
+    })
+    return;
+  }
+  let phoneReg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+  if(!phoneReg.test(phone)) {
+    wx.showToast({
+      title: '手机号格式错误',
+      icon: 'none',
+    });
+    return;
+  }
+  //密码只判断不为空
+  if(!password) {
+    wx.showToast({
+      title: '密码不能为空',
+      icon: 'none',
+    });
+    return;
+  }
+},
+~~~
+
+## 2.后端验证
+
+~~~js
+//后端验证部分
+
+//发送请求，获取用户信息
+let result = await request('/login/cellphone', {phone, password});
+//反馈登陆情况
+if(result.code === 200) {
+  wx.showToast({
+    title: '登陆成功',
+  })
+}else if(result.code === 400) {
+  wx.showToast({
+    title: '手机号错误',
+    icon: 'none',
+  })
+}else if(result.code === 502) {
+  wx.showToast({
+    title: '密码错误',
+    icon: 'none'
+  })
+}else {
+  wx.showToast({
+    title: '登陆失败，请重新登录',
+    icon: 'none',
+  })
+}
+~~~
+
+## 3.排行榜部分请求逻辑更新
+
+原因：后端验证需要最新的网易云接口项目，以前用的项目后端验证功能已经失效，但是最新的接口服务器项目清除了单独的排行榜接口，官方解释：排行榜也是歌单的一种，所以我们不能直接去请求排行榜了，我们需要先获取排行榜作为一个歌单的歌单id，再利用id去查询排行榜的详细信息。
+
+~~~js
+//由于接口更新，通过toplist接口先获取排行榜的id号，官方撤销了排行榜单独的接口（官方解释：排行榜也是歌单的一种）
+let topList = await request('/toplist');//获取排行榜的相关信息
+let idArr = [];//收集排行榜作为歌单的id
+for(let i = 0;i < 5;i ++) {
+  idArr.push(topList.list[i].id);
+}
+let resultArr = [];
+for(let i = 0;i < 5;i ++) {
+  let topListData = await request('/playlist/detail', {id: idArr[i]});//利用/playlist/detail接口可以访问指定id的歌单，用排行榜的id访问排行榜的详细信息
+  let topListItem = {name: topListData.playlist.name, tracks: topListData.playlist.tracks.slice(0,3)};
+  resultArr.push(topListItem);
+  this.setData({
+    topList: resultArr,
+  })
+}
+~~~
+
+## 4.服务器接口文档地址：[网易云音乐 NodeJS 版 API (binaryify.github.io)](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
+
+## 5.服务器项目地址：[GitHub - Binaryify/NeteaseCloudMusicApi: 网易云音乐 Node.js API service](https://github.com/Binaryify/NeteaseCloudMusicApi)
+

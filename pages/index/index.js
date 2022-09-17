@@ -22,20 +22,21 @@ Page({
     this.setData({
       recommendList: recommendListData.result,
     })
-    // 获取排行榜数据
+    //由于接口更新，通过toplist接口先获取排行榜的id号，官方撤销了排行榜单独的接口（官方解释：排行榜也是歌单的一种）
+    let topList = await request('/toplist');//获取排行榜的相关信息
+    let idArr = [];//收集排行榜作为歌单的id
+    for(let i = 0;i < 5;i ++) {
+      idArr.push(topList.list[i].id);
+    }
     let resultArr = [];
     for(let i = 0;i < 5;i ++) {
-      let topListData = await request('/top/list', {idx: i});
+      let topListData = await request('/playlist/detail', {id: idArr[i]});//利用/playlist/detail接口可以访问指定id的歌单，用排行榜的id访问排行榜的详细信息
       let topListItem = {name: topListData.playlist.name, tracks: topListData.playlist.tracks.slice(0,3)};
       resultArr.push(topListItem);
-      this.setData({//在这里发送请求增加用户体验，但会增加渲染次数
+      this.setData({
         topList: resultArr,
       })
     }
-    // this.setData({
-    //   topList: resultArr,
-    // })
-    // //在这里发送请求会导致请求完成之前页面白屏时间过长，用户体验差
   },
 
   /**
