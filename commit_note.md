@@ -625,3 +625,65 @@ for(let i = 0;i < 5;i ++) {
 
 ## 5.服务器项目地址：[GitHub - Binaryify/NeteaseCloudMusicApi: 网易云音乐 Node.js API service](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
+# eighteenth commit
+
+## 1.利用本地存储，完成个人中心页与登录页面的跳转交互：未登录时点击个人中心页的上半部分转调至登陆页面，登录成功时转跳回个人中心页并呈现用户头像以及昵称等信息。
+
+* 未登录时点击个人中心页上方转跳至登录页面：
+
+`bindtap`回调函数`toLogin`中，借助`wx.navigateTo`：
+
+~~~js
+wx.navigateTo({
+  url: '/pages/login/login'
+})
+~~~
+
+* 登陆成功跳转回个人中心页面
+
+后端验证通过后，借助`wx.switchTab`（因为`wx.navigateTo`不能跳转至tabBar页面）
+
+~~~js
+let result = await request('/login/cellphone', {phone, password});
+if(result.code === 200) {
+  wx.showToast({
+    title: '登陆成功',
+  })
+  //页面跳转
+  wx.switchTab({
+      url: '/pages/personal/personal'
+  })
+    
+}
+~~~
+
+* 利用本地存储让个人中心页拿到登录页面请求获得的用户信息
+
+`wx.setStorageSync(string key, any data)`
+
+~~~js
+//后端验证通过之后，在页面跳转之前，把用户信息存储至本地
+...
+wx.setStoragesSync('userInfo', JSON.stringify(result.profile))
+
+wx.switchTab({
+    url: '/pages/personal/personal'
+})
+~~~
+
+然后在personal页面的onload中获取本地存储的用户信息
+
+但这样即使在onload中获取了数据，并且修改了data中的数据，页面也不会渲染，因为个人中心页面从未登录时到现在登陆成功，一直没有销毁，所以onload不会再次执行，所以我们在登陆成功转跳回personal页面时，我们不用`wx.switchTab`，我们用`wx.reLaunch`（关闭所有页面，然后跳转到指定页面）
+
+~~~js
+onLoad(options) {
+  let userInfo = wx.getStorageSync('userInfo');
+  if(userInfo) {
+    this.setData({
+      userInfo: JSON.parse(userInfo),
+    })
+  }
+},
+~~~
+
+不把获取数据的逻辑放在onShow中，为了防止多次执行，优化性能。

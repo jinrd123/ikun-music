@@ -10,13 +10,19 @@ Page({
     // 作为样式值
     coverTransform: 'translateY(0rpx)',
     coverTransition: '',
+    userInfo: {},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    let userInfo = wx.getStorageSync('userInfo');
+    if(userInfo) {
+      this.setData({
+        userInfo: JSON.parse(userInfo),
+      })
+    }
   },
   handleTouchStart(event) {
     //下拉时需要清除曾经添加的过渡效果
@@ -47,6 +53,13 @@ Page({
     this.setData({
       coverTransform: `translateY(0rpx)`,
       coverTransition: 'transform 0.5s linear',
+    })
+  },
+  //跳转至登录（login）页面的回调
+  toLogin() {
+    //页面跳转
+    wx.navigateTo({
+      url: '/pages/login/login'
     })
   },
   /**

@@ -59,6 +59,11 @@ Page({
       wx.showToast({
         title: '登陆成功',
       })
+      wx.setStorageSync('userInfo', JSON.stringify(result.profile));
+      //wx.switchTab({
+      wx.reLaunch({
+        url: '/pages/personal/personal'
+      })
     }else if(result.code === 400) {
       wx.showToast({
         title: '手机号错误',
