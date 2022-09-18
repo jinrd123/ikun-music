@@ -1,1 +1,19 @@
-/* pages/video/video.wxss */
+.videoContainer .header {
+    display: flex;
+    padding: 10rpx;
+}
+
+.videoContainer .header image {
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.videoContainer .header .search {
+    border: 1rpx solid #eee;
+    /* flex:1实现中间栏自适应 */
+    flex: 1;
+    margin: 0 20rpx;
+    text-align: center;
+    line-height: 60rpx;
+    color: #d43c33;
+}

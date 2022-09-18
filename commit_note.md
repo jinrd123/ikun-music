@@ -739,3 +739,121 @@ onLoad(options) {
 <view vx:else>暂无播放记录</view>
 ~~~
 
+# twenty-first commit
+
+## 知识点
+
+### `flex：1`实现三栏布局中间宽度自适应（双飞翼和圣杯的新方案）
+
+父元素是flex元素，子元素有三个属性
+
+* `flex-grow`
+* `flex-shrink`
+* `flex-basis`
+
+#### flex-grow
+
+概念：默认值是0，代表主轴上即使存在多余空间，也不会放大
+
+* 所有项目的`flex-grow` 为 1：等分剩余空间（自动放大占位）
+* `flex-grow` 为 n 的项目，占据的空间（放大的比例）是 `flex-grow` 为 1 的 n 倍。
+
+#### flex-shrink
+
+概念：默认值为1，所有项目默认值都为1，代表主轴空间如果不足，所有项目将等比例缩小
+
+* `flex-shrink`为0，代表这个项目不会缩小
+* `flex-shrink`为n的项目，空间不足时缩小的比例是`flex-shrink`为1的项目的n倍
+
+#### flex-basis
+
+概念：默认值为auto，代表这个项目大小不变，原本该多大就多大，前面的flex-shrink和flex-grow都涉及一个概念----主轴空间，flex-basis值为百分比，代表这个项目在主轴上的大小是flex容器的百分之多少，比如flex容器宽度1000px，某个项目flex-basis值为10%，那么这个项目宽度就是100px，而且通过flex-basis设置的大小优先级高于width的优先级。
+
+* `flex-basis`为百分比，代表这个项目主轴上的大小为flex容器的百分之多少
+* `flex-basis`为具体px，代表这个项目主轴上就是多大
+
+#### flex
+
+`flex`属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值分别为`0 1 auto`
+
+##### flex写法
+
+* flex：n；
+
+  ~~~css
+  flex ：n；
+  /* 等同于: */
+  flex-grow ：n；
+  flex-shrink ：1；
+  flex-basis ：0%；
+  ~~~
+
+* flex：n1 n2；
+
+  ~~~css
+  flex ：n1 n2;
+  /* 等同于: */
+  flex-grow ：n1；
+  flex-shrink ：n2；
+  flex-basis ：0%；
+  ~~~
+
+* flex：长度 or 百分比；
+
+  ~~~css
+  flex : L;
+  /* 等同于: */
+  flex-grow ：1；
+  flex-shrink ：1；
+  flex-basis ：L；
+  ~~~
+
+* flex：n L
+
+  ~~~css
+  flex ：n L；
+  /* 等同于: */
+  flex-grow：n；
+  flex-shrink：1；
+  flex-basis：L;
+  ~~~
+
+总结：**`flex-grow` 和 `flex-shrink` 在 `flex` 属性中不规定值则为 1，`flex-basis` 为 0%。**（所以flex：auto即为flex：1 1 auto）
+
+**所以，flex：1即为flex-grow：1，flex-shrink：1，flex-basis：0%**，使用flex：1实现两端固定，中间自适应的原理就是中间的项目flex-grow：1，其它项目flex-grow的值都为0，这样相当于如果主轴有空间没占满，就直接全部分给中间的项目，**flex-basis为0%，但是不影响，其实顺序是每个项目不管通过width还是flex-basis先获得了自己的一个大小之后，即使这时候flex-basis让我们一点大小没分到，但是在根据主轴的剩余空间平分主轴空间的时候，它分得了所有主轴剩余的空间**（如果屏幕变小，flex-shrink的默认值所有项目都为1，三个部分都等比例缩小）
+
+~~~html
+<div class="container">
+	<div class="item1"></div>
+	<div class="item2"></div>
+	<div class="item3"></div>
+</div>
+<style>
+	.container {
+        /*父元素flex*/
+		display: flex;
+		height: 500px;
+		border:1px solid green
+	}
+	.item1 {
+		background-color: red;
+		height: 100%;
+		width: 250px;
+	}
+	.item2 {
+		background-color: black;
+		height: 100%;
+		width: 250px;
+		flex-grow: 1;/*子元素flex-grow为1，等价于flex:1，相当于后两个属性省略*/
+	}
+	.item3 {
+		background-color: aqua;
+		height: 100%;
+		width: 250px;
+	}
+</style>
+~~~
+
+## 本次提交完成内容
+
+完成视频页（video）的头部结构——三栏布局，中间栏自适应：父元素display：flex，两侧图片，中间部分flex：1，说白了就是flex-grow：1；
