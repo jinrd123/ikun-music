@@ -687,3 +687,44 @@ onLoad(options) {
 ~~~
 
 不把获取数据的逻辑放在onShow中，为了防止多次执行，优化性能。
+
+# ninteenth commit
+
+## 1.完成个人中心页面最近播放记录的动态展示
+
+* 结构选用`<scroll-view>`
+
+* 获取服务器数据：
+
+  * 我们在onLoad中发请求获取服务器数据，但是为了避免给onLoad使用async关键字，我们先封装一个方法，在onLoad中进行调用
+
+    ~~~js
+    async getUserRecentPlayList(userId) {
+      let recentPlayListData = await request('/user/record',{uid: userId, type: 0});
+      //因为最近播放数据的数据项没有唯一标识的id属性，所以可以用map方法人为添加id属性，给wx:key使用
+      //截取最近播放数据数组之后用map方法进行加工再使用
+      let index = 0;
+      let recentPlayList = recentPlayListData.allData.splice(0,10).map(item => {
+        item.id = index++;
+        return item;
+      })
+      this.setData({
+        recentPlayList,
+      })
+    },
+    ~~~
+
+    ~~~js
+    onLoad(options) {
+      let userInfo = wx.getStorageSync('userInfo');
+      if(userInfo) {
+        this.setData({
+          userInfo: JSON.parse(userInfo),
+        })
+        //获取用户播放记录
+        this.getUserRecentPlayList(this.data.userInfo.userId);
+      }
+    },
+    ~~~
+
+    
