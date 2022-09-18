@@ -1,18 +1,37 @@
-// pages/video/video.js
+import request from '../../utils/request';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    videoGroupList: [],//导航标签数据
+    navId: ''//当前选择的导航的标识
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.getVideoGroupListData();
+  },
 
+  // 获取导航数据
+  async getVideoGroupListData() {
+    let videoGroupListData = await request('/video/group/list');
+    this.setData({
+      videoGroupList: videoGroupListData.data.slice(0,14),
+      navId: videoGroupListData.data[0].id,
+    })
+  },
+
+  //点击切换导航的回调
+  changeNav(event) {
+    let navId = event.currentTarget.id;
+    this.setData({
+      navId: navId>>>0,//event.currentTarget.id默认为string类型，所以要把id转回number类型再使用
+      //string转number的方法二：navId: navId*1
+    })
   },
 
   /**

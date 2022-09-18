@@ -884,3 +884,31 @@ onLoad(options) {
 </scroll-view>
 ~~~
 
+# twenty-third commit
+
+## 知识点
+
+### 关于微信小程序事件回调函数传参的方法：
+
+不像vue中的函数直接传参：`@click="fun(params)"`，微信小程序事件的回调函数不能直接传参，事件监听后面只写回调方法名：`bindtap="fun"`，传参的话用`id=paramsValue`或者`data-key=value`的形式，但js部分微信小程序的回调函数可以接收一个事件参数，利用这个事件参数`event`访问传入的参数：`event.currentTarget.dataset.key`或者`event.currentTarget.id`
+
+## 本次提交完成内容
+
+### 1.video导航区域数据动态展示
+
+### 2.给选中的导航项动态添加类名（下划线效果）
+
+用服务器数据中的id项给回调函数传参，这里传给pages实例之后id从一个数字变成了字符串，然后用这个字符串id更新data数据，在wxml中通过比较data中保存id与服务器数据id，如果相同添加class，所以我们就需要在更新data中的id时对`event.currentTarget.id`进行数据类型转换。转成数字。
+
+~~~js
+changeNav(event) {
+  let navId = event.currentTarget.id;
+  this.setData({
+    navId: navId*1,//string转number的方法一，方法二：还可以navId: navId>>>0
+    //>>>0：右移零位，相当于没有位移，但是它可以把string类型强制转化为number类型
+  })
+},
+~~~
+
+总结：传给标签的id属性在pages里面拿到之后会自动转化为string类型；但经过测试用data-id传给标签的参数id不会转化，保留了number类型，所以这里用`data-key=value`的方式传参不用类型转化便可以解决问题。
+

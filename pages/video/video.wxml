@@ -3,51 +3,16 @@
     <view class="header">
         <image src="/static/images/video/video.jpg"/>
         <view class="search">
-            搜索商品
+            搜索
         </view>
         <image src="/static/images/logo.png"/>
     </view>
 
     <!-- 导航区域 -->
     <scroll-view class="navScroll" scroll-x enable-flex>
-        <view class="navItem">
-            <view class="navContent active">
-                推荐
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                万有引力
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                推荐
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                万有引力
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                推荐
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                万有引力
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                推荐
-            </view>
-        </view>
-        <view class="navItem">
-            <view class="navContent active">
-                万有引力
+        <view class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
+            <view class="navContent {{navId === item.id ? 'active' : ''}}" bindtap="changeNav" id="{{item.id}}" data-id="{{item.id}}">
+                {{item.name}}
             </view>
         </view>
     </scroll-view>
