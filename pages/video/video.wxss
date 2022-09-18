@@ -1,3 +1,4 @@
+/* 头部区域 */
 .videoContainer .header {
     display: flex;
     padding: 10rpx;
@@ -16,4 +17,23 @@
     text-align: center;
     line-height: 60rpx;
     color: #d43c33;
+}
+
+/* 导航区域 */
+.navScroll {
+    display: flex;
+    white-space: nowrap;
+    height: 62rpx;
+}
+
+.navScroll .navItem {
+    padding: 0 30rpx;
+    font-size: 28rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.navItem .active {
+    box-sizing: content-box;
+    border-bottom: 1rpx solid #d43c33;
 }

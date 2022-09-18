@@ -857,3 +857,30 @@ onLoad(options) {
 ## 本次提交完成内容
 
 完成视频页（video）的头部结构——三栏布局，中间栏自适应：父元素display：flex，两侧图片，中间部分flex：1，说白了就是flex-grow：1；
+
+# twenty-second commit
+
+## 1.video导航区域静态搭建
+
+结构选用`<scroll-view>`，每一项里面就是简单的文本，但我们要给选中的导航增加一个下边框，这个边框只在文本下面有，所以`scrollItem`里面就不能直接是文本，因为这样border-bottom会包含`scrollItem`的padding部分，以至于超出文本部分，解决方案就是`scrollItem`内保再嵌套一个`<view>`给`scrollItem`添加padding，然后给最内部的`view`添加border-bottom。
+
+~~~css
+/*以下结构给navItem添加border-bottom会包括padding部分，不理想*/
+<scroll-view class="navScroll" scroll-x enable-flex>
+    <view class="navItem active">
+        推荐
+    </view>
+    <view class="navItem">
+        万有引力
+    </view>
+</scroll-view>
+/*多嵌套一层view，给最内层的view添加border-bottom，这样底部边框只会包含文本部分*/
+<scroll-view class="navScroll" scroll-x enable-flex>
+    <view class="navItem">
+        <view class="navContent active">
+            推荐
+        </view>
+    </view>
+</scroll-view>
+~~~
+

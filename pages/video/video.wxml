@@ -7,4 +7,48 @@
         </view>
         <image src="/static/images/logo.png"/>
     </view>
+
+    <!-- 导航区域 -->
+    <scroll-view class="navScroll" scroll-x enable-flex>
+        <view class="navItem">
+            <view class="navContent active">
+                推荐
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                万有引力
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                推荐
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                万有引力
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                推荐
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                万有引力
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                推荐
+            </view>
+        </view>
+        <view class="navItem">
+            <view class="navContent active">
+                万有引力
+            </view>
+        </view>
+    </scroll-view>
 </view>
