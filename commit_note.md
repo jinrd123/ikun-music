@@ -727,4 +727,15 @@ onLoad(options) {
     },
     ~~~
 
-    
+
+# twentieth commit
+
+1.个人中心页完善：考虑用户没有播放记录的情况
+
+~~~html
+<scroll-view wx:if="{{recentPlayList.length}}">
+    ...
+</scroll-view>
+<view vx:else>暂无播放记录</view>
+~~~
+
