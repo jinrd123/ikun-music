@@ -60,6 +60,10 @@ Page({
         title: '登陆成功',
       })
       wx.setStorageSync('userInfo', JSON.stringify(result.profile));
+      wx.setStorage({
+        key: 'cookie',
+        data: result.cookie
+      })
       //wx.switchTab({
       wx.reLaunch({
         url: '/pages/personal/personal'

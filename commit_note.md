@@ -912,3 +912,98 @@ changeNav(event) {
 
 总结：传给标签的id属性在pages里面拿到之后会自动转化为string类型；但经过测试用data-id传给标签的参数id不会转化，保留了number类型，所以这里用`data-key=value`的方式传参不用类型转化便可以解决问题。
 
+# twenty-fourth commit
+
+~~1.video页面中获取选中导航下的视频数据~~
+
+~~首先写好请求异步函数~~
+
+~~~js
+async getVideoList(navId) {
+  let videoListData = await request('/video/group', {id: navId});
+},
+~~~
+
+~~但这个函数不能在onLoad中与`getVideoGroupListData();`（获取视频导航的请求）同级调用，因为`getVideoList(navId)`需要的navId是通过导航请求返回的，所以为了避免`getVideoList(navId)`发出时服务器已经返回了navId相关数据，我们把`getVideoList(navId)`的调用放在`getVideoGroupListData();`的内部，在`getVideoGroupListData();`中更新了data数据之后再发送`getVideoList(navId)`~~
+
+~~~js
+async getVideoGroupListData() {
+  let videoGroupListData = await request('/video/group/list');
+  this.setData({
+    videoGroupList: videoGroupListData.data.slice(0,14),
+    navId: videoGroupListData.data[0].id,
+  })
+  //获取视频列表数据
+  this.getVideoList(this.data.navId);
+},
+~~~
+
+~~`getVideoList(navId)`请求需要用户登录的cookie值才能成功，所以我们在登录的请求成功时需要保存服务器返回的cookie信息，为了识别某个请求是登录请求，我们可以在发送登录请求的时候添加布尔类型参数isLogin，给封装的request方法中`wx.request`的成功回调中增加逻辑判断：`if(data.isLogin){wx.setStorage({key:'cookies',data: res.cookies})}`，并且在发请求时携带cookie信息：`wx.request`增加一个配置项`header:{cookie:...}`~~
+
+~~~js
+import config from './config';
+export default (url, data = {}, method = 'GET') => {
+    return new Promise((resolve,reject)=>{
+        wx.request({
+            url: config.host + url,
+            data,
+            method,
+            //有些请求需要cookie信息，所以增加一个请求配置项header，里面携带cookie
+            //经测试，返回的cookie中我们只需要包含MUSIC_U字段的那一个cookie即可
+            header: {
+                cookie: wx.getStorageSync('cookie') ? wx.getStorageSync('cookie').find(item => item.indexOf('MUSIC_U') !== -1) : '',
+            },
+            success(res) {
+                resolve(res.data);
+                //如果发请求是data中有isLogin属性，就说明是登录请求，成功时就需要保存cookies信息
+                if(data.isLogin) {
+                    wx.setStorage({
+                        key: 'cookies',
+                        data: res.cookies
+                    })
+                }
+            },
+            fail(err) {
+                reject(err);
+            }
+        })
+    })
+}
+~~~
+
+## 1.video页面中获取选中导航下的视频数据
+
+**经测试，网易云音乐返回的数据结构发生改变，登录信息的cookie存放在了登录成功返回的数据的data项内部，而且`getVideoList(navId)`中向'/video/group'接口发送请求时cookie信息是作为请求普通参数携带的，而不是放在请求头中**
+
+所以video页面获取选中导航的视频数据核心逻辑首先是
+
+* 修改登录页面，在登录后端验证通过拿到用户信息时，把服务器返回的cookie保存至本地
+
+  ~~~js
+  let result = await request('/login/cellphone', {phone, password, isLogin:true});
+  if(result.code === 200) {
+    wx.showToast({
+      title: '登陆成功',
+    })
+    wx.setStorageSync('userInfo', JSON.stringify(result.profile));
+    //登陆成功将cookie信息存储至本地
+    wx.setStorage({
+      key: 'cookie',
+      data: result.cookie
+    })
+    ...
+  ~~~
+
+* 获取视频数据的回调函数获取cookie参数时访问本地存储，在初始化视频导航栏时和点击切换导航栏时调用`getVideoList`函数
+
+  ~~~js
+  async getVideoList(navId) {
+    let videoListData = await request('/video/group', {id: navId, cookie: wx.getStorageSync('cookie')});
+    this.setData({
+      videoList: videoListData,
+    })
+  },
+  ~~~
+
+  
+

@@ -6,7 +6,8 @@ Page({
    */
   data: {
     videoGroupList: [],//导航标签数据
-    navId: ''//当前选择的导航的标识
+    navId: '',//当前选择的导航的标识
+    videoList: [],
   },
 
   /**
@@ -23,6 +24,9 @@ Page({
       videoGroupList: videoGroupListData.data.slice(0,14),
       navId: videoGroupListData.data[0].id,
     })
+
+    //获取视频列表数据
+    this.getVideoList(this.data.navId);
   },
 
   //点击切换导航的回调
@@ -31,6 +35,15 @@ Page({
     this.setData({
       navId: navId>>>0,//event.currentTarget.id默认为string类型，所以要把id转回number类型再使用
       //string转number的方法二：navId: navId*1
+    })
+    this.getVideoList(this.data.navId);
+  },
+
+  //获取视频列表数据
+  async getVideoList(navId) {
+    let videoListData = await request('/video/group', {id: navId, cookie: wx.getStorageSync('cookie')});
+    this.setData({
+      videoList: videoListData,
     })
   },
 
