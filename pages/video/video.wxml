@@ -9,8 +9,8 @@
     </view>
 
     <!-- 导航区域 -->
-    <scroll-view class="navScroll" scroll-x enable-flex>
-        <view class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
+    <scroll-view class="navScroll" scroll-x enable-flex scroll-into-view="{{'scroll' + navId}}" scroll-with-animation="{{true}}">
+        <view id="{{'scroll' + item.id}}" class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
             <view class="navContent {{navId === item.id ? 'active' : ''}}" bindtap="changeNav" id="{{item.id}}" data-id="{{item.id}}">
                 {{item.name}}
             </view>

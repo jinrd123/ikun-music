@@ -1069,3 +1069,22 @@ async getVideoList(navId) {
 * `wx.hideLoading();`：清除提示框
 
 ### 2.在切换了导航，显示“正在加载“提示框时，用户依然能看见原有的视频内容，这时候因该白屏比较合适，所以在切换导航的回调中，更新data中的导航标识的同时修改videoList为空数组（清除原有的视频数据）
+
+# twenty-seventh commit
+
+## 1.实现视频页点击某个导航时自动滚动scroll-view，让被选中的导航项滚动到导航栏的最左端
+
+利用<scroll-view>标签的`scroll-into-view`属性，需要先给每一个`scrollItem`设置`id`属性，`scroll-into-view`指定一个id值（这个id值绑定data中的动态值，一旦修改data中的这个值，就会有自动滑动效果），就会切换到`scroll-into-view`指定的id位置。这个切换是瞬间的，我们给<scroll-view>添加`scroll-with-animation`属性即给导航切换增加了动画过渡效果。
+
+plus：但是`scroll-into-view`的id值不能以数字开头，所以可以给`scroll-into-view`的id和`scrollItem`的id都增加一个相同的字符串前缀。
+
+~~~css
+<scroll-view class="navScroll" scroll-x enable-flex scroll-into-view="{{'scroll' + navId}}" scroll-with-animation="{{true}}">
+    <view id="{{'scroll' + item.id}}" class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
+        <view class="navContent {{navId === item.id ? 'active' : ''}}" bindtap="changeNav" id="{{item.id}}" data-id="{{item.id}}">
+            {{item.name}}
+        </view>
+    </view>
+</scroll-view>
+~~~
+
