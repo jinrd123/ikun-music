@@ -10,7 +10,6 @@
 }
 
 .videoContainer .header .search {
-    border: 1rpx solid #eee;
     /* flex:1实现中间栏自适应 */
     flex: 1;
     margin: 0 20rpx;
@@ -36,4 +35,78 @@
 .navItem .active {
     box-sizing: content-box;
     border-bottom: 1rpx solid #d43c33;
+}
+
+/* 视频列表 */
+
+.videoScroll {
+    margin-top: 10rpx;
+}
+
+.videoItem {
+    /* 左右内边距 */
+    padding: 10rpx 3%;
+}
+
+.videoItem video {
+    width: 100%;
+    height: 360rpx;
+    border-radius: 10rpx;
+}
+
+/* 视频下方相关信息区域 */
+.videoItem .content {
+    font-size: 26rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    max-width: 500rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* footer */
+.footer {
+    border-top: 1rpx solid #eee;
+    padding: 20rpx 0;
+}
+.footer .avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    /* 设置文本在元素内部的上下位置 */
+    vertical-align: middle;
+}
+
+.footer .nickName {
+    font-size: 26rpx;
+    /* .avatar和.avatar是同级的，一个图片和一行文本，两者都设置了vertical-align: middle;之后就可以让图片和文本一条水平线 */
+    vertical-align: middle;
+    margin-left: 20rpx;
+}
+
+.footer .comments_praised {
+    float: right;
+}
+
+.comments_praised .btn {
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.comments_praised .btn:after {
+    border: none;
+}
+
+.comments_praised .item {
+    margin-left: 50rpx;
+    position: relative;
+}
+
+.comments_praised .item .count {
+    position: absolute;
+    top: -20rpx;
+    font-size: 20rpx;
 }

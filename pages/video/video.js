@@ -42,8 +42,19 @@ Page({
   //获取视频列表数据
   async getVideoList(navId) {
     let videoListData = await request('/video/group', {id: navId, cookie: wx.getStorageSync('cookie')});
+    let index = 0;
+    let videoList = videoListData.datas.map(item => {
+      item.id = index++;
+      return item;
+    })
+    //由于服务器返回数据格式更改，videoList中无法访问到视频的播放地址（videoList[i].data.urlInfo为null），所以我们需要利用videoListData中的视频id再次发请求获取视频播放地址
+    //完善videoList[i].data.urlInfo数据
+    for(let i = 0;i < videoList.length;i ++){
+      let videoUrl = await request('/video/url',{id: videoList[i].data.vid});
+      videoList[i].data.urlInfo = videoUrl.urls[0].url;
+    }
     this.setData({
-      videoList: videoListData,
+      videoList,
     })
   },
 

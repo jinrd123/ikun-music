@@ -1007,3 +1007,54 @@ export default (url, data = {}, method = 'GET') => {
 
   
 
+# twenty-fifth commit
+
+## 1.video页完成视频列表的静态搭建与动态展示
+
+scroll-view标签遍历生成item时，遍历数据的数据项没有id型的唯一标识型数据项，所以我们要加工遍历数据，增加一个id项供wx：key使用**（为什么要加工数据，而不用遍历时的index？因为wx:key=“”引号中访问的数据是遍历项自身的某个属性，而访问不到wx:for提供的index）**
+
+~~~js
+async getVideoList(navId) {
+  let videoListData = await request('/video/group', {id: navId, cookie: wx.getStorageSync('cookie')});
+    
+  //加工videoListData数据，手动增加一个id值给wx:key用（用map加工原数组）
+  let index = 0;
+  let videoList = videoListData.datas.map(item => {
+    item.id = index++;
+    return item;
+  })
+  
+  this.setData({
+    videoList
+  })
+},
+~~~
+
+以上为尚硅谷视频教学的实现方法，**但是发现网易云接口变动，videoList中视频的url为null**，只有视频id，需要通过'/video/url'接口获取对应视频id的视频播放地址，相当于需要我们手动发请求完善最初请求获得的videoListData数据，把null完善成真实的数据，所以修改以上函数：
+
+~~~js
+//获取视频列表数据
+async getVideoList(navId) {
+  let videoListData = await request('/video/group', {id: navId, cookie: wx.getStorageSync('cookie')});
+  let index = 0;
+  let videoList = videoListData.datas.map(item => {
+    item.id = index++;
+    return item;
+  })
+  //由于服务器返回数据格式更改，videoList中无法访问到视频的播放地址（videoList[i].data.urlInfo为null），所以我们需要利用videoListData中的视频id再次发请求获取视频播放地址
+  //完善videoList[i].data.urlInfo数据
+  for(let i = 0;i < videoList.length;i ++){
+    let videoUrl = await request('/video/url',{id: videoList[i].data.vid});
+    videoList[i].data.urlInfo = videoUrl.urls[0].url;
+  }
+  this.setData({
+    videoList,
+  })
+},
+~~~
+
+视频播放窗下方的用户与视频的相关信息利用videoList动态展示即可，暂未添加交互效果
+
+**css制作效果：用户头像右边是用户名，两者在一条水平线上**
+
+首先两个同级，同属于某个父级元素，用户头像是一个image标签，用户名是一个text标签，两者都是行内元素，此时它俩位于同一行，要想让他们俩在同一水平线上，我们只需给image和text都加上`vertical-align: middle;`样式即可（vertical-align是指被设置的元素位于其父元素的一行的上下某个位置）
