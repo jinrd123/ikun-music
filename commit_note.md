@@ -1088,3 +1088,37 @@ plus：但是`scroll-into-view`的id值不能以数字开头，所以可以给`s
 </scroll-view>
 ~~~
 
+# twenty-eighth commit
+
+## 1.解决多个视频同时播放的问题，修改为同一时间只能播放同一个视频
+
+给video添加`bindplay`事件的回调`handlePlay`
+
+`<video src="{{item.data.urlInfo}}" bindplay="handlePlay" id="{{item.data.vid}}"></video>`
+
+~~~js
+handlePlay(event) {
+  //获取被点击的视频的id
+  let vid = event.currentTarget.id;
+  //关闭上一个播放的视频
+  this.vid !== vid && this.videoContext && this.videoContext.stop();
+  /*
+  这段代码等价于：
+  //先判断点击的不是同一个视频：以前的视频vid和本次视频vid不相同
+  if(this.vid !== vid) {
+  	//如果不是第一次点击播放视频，也就是已经创建了videoContext
+  	if(this.videoContext) {
+  		//我们就暂停上一个视频的播放
+  		this.videoContext.stop();
+  	}
+  }
+  */
+  //更新this.vid和this.videoContext为本次点击的视频的vid和videoContext
+  this.vid = vid;
+  this.videoContext = wx.createVideoContext(vid);
+},
+~~~
+
+这里我们把vid和videoContext都创建在了页面实例上：`this.vid=vid...`，这样就做到了相同事件两次之间的信息交流（比如下一次点击视频时可以通过this.vid）访问到上一次点击时设置的vid。
+
+plus：只用this.videoContext创建视频上下文对象，用到了一种设计模式：单例模式（需要创建多个对象的场景下，通过一个变量接收，始终保持只有一个对象实例）这样可以节省内存空间。

@@ -66,6 +66,28 @@ Page({
     })
   },
 
+  //解决多个视频可以同时播放的问题
+  handlePlay(event) {
+    //获取被点击的视频的id
+    let vid = event.currentTarget.id;
+    //关闭上一个播放的视频
+    this.vid !== vid && this.videoContext && this.videoContext.stop();
+    /*
+    这段代码等价于：
+    //先判断点击的不是同一个视频：以前的视频vid和本次视频vid不相同
+    if(this.vid !== vid) {
+      //如果不是第一次点击播放视频，也就是已经创建了videoContext
+      if(this.videoContext) {
+        //我们就暂停上一个视频的播放
+        this.videoContext.stop();
+      }
+    }
+    */
+    //更新this.vid和this.videoContext为本次点击的视频的vid和videoContext
+    this.vid = vid;
+    this.videoContext = wx.createVideoContext(vid);
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
