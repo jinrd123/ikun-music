@@ -35,7 +35,13 @@ Page({
     this.setData({
       navId: navId>>>0,//event.currentTarget.id默认为string类型，所以要把id转回number类型再使用
       //string转number的方法二：navId: navId*1
+      videoList: [],//点击切换新的视频数据的时候，清空之前的视频数据（页面空白）,增加用户体验
     })
+    //在发请求切换新的视频数据之前显示“正在加载”，增加用户体验(并且在新数据到来之后关闭“正在加载”)
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,//加载过程中使用户点击失效
+    });
     this.getVideoList(this.data.navId);
   },
 
@@ -53,6 +59,8 @@ Page({
       let videoUrl = await request('/video/url',{id: videoList[i].data.vid});
       videoList[i].data.urlInfo = videoUrl.urls[0].url;
     }
+    //这里相当于新数据已经准备就绪，可以关闭“正在加载”提示框了
+    wx.hideLoading();
     this.setData({
       videoList,
     })
