@@ -1173,3 +1173,31 @@ handlePlay(event) {
 1.<video>的`object-fit`属性解决视频大小与<video>大小不一致出现黑色无动画区域的情况
 
 `<video object-fit="cover">`
+
+# thirty-first commit
+
+## 知识点
+
+### c3新特性：calc
+
+* 可以动态计算css的宽高，**运算符两侧必须加上空格，否则计算失效**
+
+### 视口单位： 
+
+* vh：1vh=1%的视口高度
+* vw：1vw=1%的视口宽度
+
+## 1.实现视频页上下滑动的时候上方导航栏固定
+
+实现原理，给<scroll-view>设置一个高度，那么滑动只会在<scroll-view>的高度范围内进行。我们的视频页，上方是导航栏，最下方是tabBar，我们只需设置<scroll-view>高度为整个页面减去导航栏高度和tabBar高度，视觉上就实现了滑动过程中导航栏的固定，其实实际上是以前很长的页面现在缩小成一个手机屏幕的大小，自然上部的导航栏不会滑走。
+
+因为需要做机型适配，我们需要计算出<scroll-view>多高，而且都要用”适配单位“（vh、vw、rpx...）
+
+~~~css
+.videoScroll {
+    margin-top: 10rpx;
+    /*适配计算*/
+    height: calc(100vh - 152rpx);
+}
+~~~
+
