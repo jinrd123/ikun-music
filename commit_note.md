@@ -1255,3 +1255,11 @@ if(videoItem) {
 
 
 **此功能在pc端运行正常，但真机调试会造成视频播放卡顿**，所以在项目中暂时注释掉。
+
+# thirty-third commit
+
+1.视频页给<scroll-view>增加下拉刷新和上拉加载功能
+
+* `bindrefresherrefresh`下拉刷新对应事件
+
+* `bindscrolltolower`上拉触底对应事件

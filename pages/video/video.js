@@ -10,6 +10,7 @@ Page({
     videoList: [],
     videoId: '',//视频的id标识(对应的视频以video标签呈现)
     //videoUpdateTime: [],//里面存放对象，对象记录视频id和视频的播放时长
+    isTriggered: false,//scroll-view的下拉刷新状态相关数据
   },
 
   /**
@@ -116,6 +117,25 @@ Page({
     // })
   },
 
+  //自定义scroll-view下拉刷新的回调
+  handleRefresher() {
+    this.getVideoList(this.data.navId);
+    this.setData({
+      isTriggered: false//关闭下拉刷新
+    })
+  },
+
+  //自定义scroll-view上拉触底的回调
+  handleToLower() {
+    //拷贝一份原数组模拟新请求来的新数据
+    let {videoList} = this.data;
+    let newVideoList = videoList.filter(()=>true);
+    //更新data
+    videoList.push(...newVideoList);
+    this.setData({
+      videoList,
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
