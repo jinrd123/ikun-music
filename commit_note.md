@@ -1201,3 +1201,57 @@ handlePlay(event) {
 }
 ~~~
 
+# thirty-second commit
+
+## 1.实现记录视频播放进度的功能
+
+data中增加配置数据：`videoUpdateTime: []`，数组里面存放对象，对象记录视频id和视频的播放时长
+
+监听<video>的”视频时长更新事件”——bindtimeupdate和视频结束事件——bindended
+
+视频播放过程中实时记录视频的播放进度
+
+对应回调：
+
+~~~js
+//监听视频播放进度的回调
+handleTimeUpdate(event) {
+  let videoTimeObj = {vid: event.currentTarget.id, currentTime: event.detail.currentTime};
+  let {videoUpdateTime} = this.data;
+  //检查之前的视频播放记录里有没有关于目前播放视频的信息，如果有就更新信息，没有就添加当前视频的播放信息
+  //数组的find方法适合用来查找符合条件的数组元素
+  let videoItem = videoUpdateTime.find(item => item.vid === videoTimeObj.vid);
+  if(videoItem) {
+    videoItem.currentTime = event.detail.currentTime;
+  }else {
+    videoUpdateTime.push(videoTimeObj);
+  }
+  this.setData({
+    videoUpdateTime
+  })
+},
+
+//视频播放结束，移出播放时长的记录
+handleEnded(event) {
+  let {videoUpdateTime} = this.data;
+  videoUpdateTime.splice(videoUpdateTime.findIndex(item => item.vid === event.currentTarget.id), 1);
+  this,setData({
+    videoUpdateTime,
+  })
+},
+~~~
+
+以及在视频播放回调中读取视频的播放进度：
+
+~~~js
+//读取视频的播放进度
+let {videoUpdateTime} = this.data;
+let videoItem = videoUpdateTime.find(item => item.vid === vid);
+if(videoItem) {
+  this.videoContext.seek(videoItem.currentTime);
+}
+~~~
+
+
+
+**此功能在pc端运行正常，但真机调试会造成视频播放卡顿**，所以在项目中暂时注释掉。

@@ -28,6 +28,8 @@
                 poster="{{item.data.coverUrl}}" 
                 class="common"
                 object-fit="cover"
+                bindtimeupdate="handleTimeUpdate"
+                bindended="handleEnded"
             ></video>
 
             <!-- 性能优化，用image代替video -->

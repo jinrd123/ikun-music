@@ -8,7 +8,8 @@ Page({
     videoGroupList: [],//导航标签数据
     navId: '',//当前选择的导航的标识
     videoList: [],
-    videoId: '',//视频的id标识
+    videoId: '',//视频的id标识(对应的视频以video标签呈现)
+    //videoUpdateTime: [],//里面存放对象，对象记录视频id和视频的播放时长
   },
 
   /**
@@ -76,8 +77,45 @@ Page({
     })
     //让图片转化成的视频进行播放
     this.videoContext = wx.createVideoContext(vid);
-    this.videoContext.play();
+
+
+    // //读取视频的播放进度
+    // let {videoUpdateTime} = this.data;
+    // let videoItem = videoUpdateTime.find(item => item.vid === vid);
+    // if(videoItem) {
+    //   this.videoContext.seek(videoItem.currentTime);
+    // }
+
+
+    //this.videoContext.play();/*此代码会造成视频切换之后再切回来出现重复视频，而且无法暂停 */
   },
+
+  //监听视频播放进度的回调
+  handleTimeUpdate(event) {
+    // let videoTimeObj = {vid: event.currentTarget.id, currentTime: event.detail.currentTime};
+    // let {videoUpdateTime} = this.data;
+    // //检查之前的视频播放记录里有没有关于目前播放视频的信息，如果有就更新信息，没有就添加当前视频的播放信息
+    // //数组的find方法适合用来查找符合条件的数组元素
+    // let videoItem = videoUpdateTime.find(item => item.vid === videoTimeObj.vid);
+    // if(videoItem) {
+    //   videoItem.currentTime = event.detail.currentTime;
+    // }else {
+    //   videoUpdateTime.push(videoTimeObj);
+    // }
+    // this.setData({
+    //   videoUpdateTime
+    // })
+  },
+
+  //视频播放结束，移出播放时长的记录
+  handleEnded(event) {
+    // let {videoUpdateTime} = this.data;
+    // videoUpdateTime.splice(videoUpdateTime.findIndex(item => item.vid === event.currentTarget.id), 1);
+    // this,setData({
+    //   videoUpdateTime,
+    // })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
