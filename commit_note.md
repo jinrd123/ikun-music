@@ -1122,3 +1122,49 @@ handlePlay(event) {
 这里我们把vid和videoContext都创建在了页面实例上：`this.vid=vid...`，这样就做到了相同事件两次之间的信息交流（比如下一次点击视频时可以通过this.vid）访问到上一次点击时设置的vid。
 
 plus：只用this.videoContext创建视频上下文对象，用到了一种设计模式：单例模式（需要创建多个对象的场景下，通过一个变量接收，始终保持只有一个对象实例）这样可以节省内存空间。
+
+# twenty-ninth commit
+
+## 1.用image代替video进行性能优化（一个页面同时出现很多video的话会造成视频播放卡顿，我们设想用image代替video，只有视频被点击进行播放的时候将image转化为video）
+
+可以用<video>的`poster`属性可以修改视频封面（不用poster指定封面的话，视频封面就是第一帧）
+
+实现思路：
+
+结构中写一个与<video>同级的<image>标签，我们利用`wx:if`和`wx:else`控制两者互斥展示。两者应用统一样式（保持大小一致），并且绑定同一回调函数`handlePlay`，播放或者点击时传入相同`id`参数，点击了某一个视频或者图片后，都更新data中的`videoId`，利用`wx:if`和`wx:else`控制 遍历项携带的id信息 与 `videoId` 相同的那一个图片展示为视频，而其它遍历项都展示图片。
+
+plus：经过本次优化之后，整个视频列表只有一个<video>，而其余都是<image>，自然视频最多只有一个在播放，也就没有必要保存保证只有一个视频在播放的逻辑（上次代码）。
+
+~~~js
+handlePlay(event) {
+  //获取被点击的视频的id
+  let vid = event.currentTarget.id;
+  //更新数据，wx:if和wx:else控制只显示videoId对应的视频，其余为图片
+  this.setData({
+    videoId: vid,
+  })
+  //让图片转化成的视频进行播放
+  this.videoContext = wx.createVideoContext(vid);
+  this.videoContext.play();
+},
+~~~
+
+~~~css
+<video 
+    wx:if="{{videoId === item.data.vid}}" 
+    src="{{item.data.urlInfo}}" 
+    bindplay="handlePlay" 
+    id="{{item.data.vid}}" 
+    poster="{{item.data.coverUrl}}" 
+    class="common"
+></video>
+
+<!-- 性能优化，用image代替video -->
+<image 
+    wx:else bindtap="handlePlay" 
+    id="{{item.data.vid}}" 
+    src="{{item.data.coverUrl}}" 
+    class="common"
+/>
+~~~
+

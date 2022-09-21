@@ -20,8 +20,22 @@
     <!-- 视频列表区域 -->
     <scroll-view scroll-y class="videoScroll">
         <view class="videoItem" wx:for="{{videoList}}" wx:key="id">
-            <video src="{{item.data.urlInfo}}" bindplay="handlePlay" id="{{item.data.vid}}"></video>
+            <video 
+                wx:if="{{videoId === item.data.vid}}" 
+                src="{{item.data.urlInfo}}" 
+                bindplay="handlePlay" 
+                id="{{item.data.vid}}" 
+                poster="{{item.data.coverUrl}}" 
+                class="common"
+            ></video>
 
+            <!-- 性能优化，用image代替video -->
+            <image 
+                wx:else bindtap="handlePlay" 
+                id="{{item.data.vid}}" 
+                src="{{item.data.coverUrl}}" 
+                class="common"
+            />
 
             <view class="content">{{item.data.title}}</view>
 
