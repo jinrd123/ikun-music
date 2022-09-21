@@ -27,6 +27,7 @@
                 id="{{item.data.vid}}" 
                 poster="{{item.data.coverUrl}}" 
                 class="common"
+                object-fit="cover"
             ></video>
 
             <!-- 性能优化，用image代替video -->

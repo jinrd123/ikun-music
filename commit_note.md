@@ -1168,3 +1168,8 @@ handlePlay(event) {
 />
 ~~~
 
+# thirtieth commit
+
+1.<video>的`object-fit`属性解决视频大小与<video>大小不一致出现黑色无动画区域的情况
+
+`<video object-fit="cover">`
