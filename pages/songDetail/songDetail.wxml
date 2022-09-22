@@ -1,0 +1,13 @@
+<view class="songDetailContainer">
+    <!-- 歌曲名 -->
+    <view class="author">beyond</view>
+    <!-- 圆形底座 -->
+    <view class="circle"></view>
+    <!-- 摇杆 -->
+    <image class="needle" src="/static/images/song/needle.png"/>
+    <!-- 磁盘 -->
+    <view class="discContainer">
+        <image class="disc" src="/static/images/song/disc.png"/>
+        <image class="musicImg" src="/static/images/nvshen.jpg"/>
+    </view>
+</view>

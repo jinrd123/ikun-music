@@ -1452,3 +1452,63 @@ onLoad(options) {
 
 1.动态展示recommendSong页面数据
 
+# thirty-ninth commit
+
+## 1.搭建songDetail歌曲详情页静态页面
+
+竖向排列结构：顶部是歌曲名字，紧跟一个圆形<view>，为了覆盖下面摇杆图片的缺损，接着是摇杆图片，再下面是一个空心圆形磁盘图。
+
+~~~html
+<view class="songDetailContainer">
+    <!-- 歌曲名 -->
+    <view class="author">beyond</view>
+    <!-- 圆形底座 -->
+    <view class="circle"></view>
+    <!-- 摇杆 -->
+    <image class="needle" src="/static/images/song/needle.png"/>
+    <!-- 磁盘 -->
+    <view class="discContainer">
+        <image class="disc" src="/static/images/song/disc.png"/>
+    </view>
+</view>
+~~~
+
+磁盘和摇杆经过相对定位（`position:relative;top:-...rpx`）向上调整位置之后，摇杆顶部和底座接触，磁盘顶部和摇杆接触。但上下位置不对，应该是底座压住摇杆，摇杆压住磁盘。**这时通过`z-index`属性（需要先定位）便可以控制元素的高度（谁压住谁）**
+
+* 底座：`z-index: 100;`
+
+* 摇杆：`z-index: 99;`
+* 磁盘：没设置z-index，默认在设置了z-index的元素下面
+
+最后在<view class="discContainer">的内部添加一张歌曲图片（与磁盘图片同级），用定位实现歌曲图片在磁盘图片的中心（同一父元素下的两个同级元素，一个元素位于另一个元素的水平垂直居中位置），其实说白了就是让某个元素在父元素中水平垂直居中，至于有没有同级的第一个元素无所谓，只是说第一个元素本身就在父元素中居中了。
+
+~~~html
+<view class="discContainer">
+    <image class="disc" src="/static/images/song/disc.png"/>
+    <image class="musicImg" src="/static/images/nvshen.jpg"/>
+</view>
+~~~
+
+~~~css
+.musicImg {
+    /* 位于父元素的水平垂直居中位置方法一： */
+    /*
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    */
+    /* 位于父元素的水平垂直居中位置方法二： */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    
+    width: 370rpx;
+    height: 370rpx;
+    border-radius: 50%;
+}
+~~~
+
