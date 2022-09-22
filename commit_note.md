@@ -1599,3 +1599,6 @@ c3关键帧动画：
 }
 ~~~
 
+# forty-second commit 
+
+1.songDetail页面底部控制区域的搭建

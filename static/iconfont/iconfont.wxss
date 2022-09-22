@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3648300 */
-  src: url('//at.alicdn.com/t/c/font_3648300_cc7vo7fbgfv.woff2?t=1663677021387') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3648300_cc7vo7fbgfv.woff?t=1663677021387') format('woff'),
-       url('//at.alicdn.com/t/c/font_3648300_cc7vo7fbgfv.ttf?t=1663677021387') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_3648300_stvxyjaz59c.woff2?t=1663845532106') format('woff2'),
+       url('//at.alicdn.com/t/c/font_3648300_stvxyjaz59c.woff?t=1663845532106') format('woff'),
+       url('//at.alicdn.com/t/c/font_3648300_stvxyjaz59c.ttf?t=1663845532106') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zanting1:before {
+  content: "\e62a";
+}
+
+.icon-zanting:before {
+  content: "\e60c";
+}
+
+.icon-shangyishoushangyige:before {
+  content: "\e78a";
+}
+
+.icon-xiayigexiayishou:before {
+  content: "\e7a5";
+}
+
+.icon-24gl-playlistMusic:before {
+  content: "\ea71";
+}
+
+.icon-23_shunxubofang:before {
+  content: "\e658";
 }
 
 .icon-xiai:before {
