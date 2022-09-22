@@ -183,6 +183,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
+    return {
+      title: '转发测试',
+      page: '/page/video/video',
+      imageUrl: '/static/images/nvshen.jpg'
+    }
   }
 })

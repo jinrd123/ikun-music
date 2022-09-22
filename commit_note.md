@@ -1263,3 +1263,76 @@ if(videoItem) {
 * `bindrefresherrefresh`下拉刷新对应事件
 
 * `bindscrolltolower`上拉触底对应事件
+
+除了<scroll-view>的两个事件，页面长度大于手机屏幕时（有滚动条时），整个页面也是有下拉刷新和上拉触底对应事件的。
+
+~~~js
+/**
+ * 页面相关事件处理函数--监听用户下拉动作
+ */
+onPullDownRefresh() {
+
+},
+
+/**
+ * 页面上拉触底事件的处理函数
+ */
+onReachBottom() {
+
+},
+~~~
+
+# thirty-fouth commit
+
+<button>设置属性`open-type="share"`便可增加点击分享功能，视频右下的省略按钮便是`<button open-type="share">`
+
+# thirty-fifth commit
+
+## 1.新建recommendSong页面结构
+
+## 2.完成recommendSong页面头部区域的静态搭建
+
+~~~html
+<view class="header">
+    <image src="/static/images/recommendSong/recommendSong.jpg"/>
+    <view class="date">
+        <text class="day">  17 / </text>
+        <text class="month"> 10</text>
+    </view>
+</view>
+~~~
+
+使<view class="date">位于<image src="/static/images/recommendSong/recommendSong.jpg"/>中心位置（水平垂直居中）：
+
+~~~css
+.recommendSongContainer .header {
+    width: 100%;
+    height: 300rpx;
+    /*父元素相对定位，子绝父相*/
+    position: relative;
+}
+
+.recommendSongContainer .header image {
+    width: 100%;
+    height: 100%;
+}
+
+.recommendSongContainer .header .date {
+    /*绝对定位:左和上各百分之五十，此时date的左上角处于父元素的中心，需要再把data向左向上各移动自身百分之五十的距离*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-45%, -40%);/*由于图片不是上下左右对称，所以不是-50%，-50%*/
+    /*行内文字水平垂直居中*/
+    height: 100rpx;
+    text-align: center;
+    line-height: 100rpx;
+    
+    
+	width: 300rpx;
+    color: #fff;
+}
+~~~
+
+
+
