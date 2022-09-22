@@ -46,6 +46,20 @@
     width: 598rpx;
 }
 
+.disAnimation {
+    animation: disc 4s linear infinite;
+    animation-delay: 1s;
+}
+
+@keyframes disc {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .disc {
     height: 598rpx;
     width: 598rpx;

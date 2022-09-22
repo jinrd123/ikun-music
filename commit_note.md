@@ -1549,3 +1549,53 @@ onLoad(options) {
 }
 ~~~
 
+# forty-first commit
+
+## 知识点：
+
+c3关键帧动画：
+
+`@keyframes 动画名`：定义动画
+
+* `from to`：适用于简单的动画，只有起始帧和结束帧
+* `百分比`：多用于复杂的动画，0%—100%可以任意拆分
+
+`animation:动画名 过渡时间 过渡函数 （无穷）; `：给元素添加动画效果
+
+`animation-delay:时间;`：设置动画延迟
+
+## 1.磁盘动画效果的实现
+
+根据data中的isPlay属性给磁盘部分动态添加.disAnimation类：
+
+~~~html
+<view class="discContainer {{isPlay?'disAnimation':''}}">
+    <image class="disc" src="/static/images/song/disc.png"/>
+    <image class="musicImg" src="/static/images/nvshen.jpg"/>
+</view>
+~~~
+
+~~~css
+/* 磁盘 */
+.discContainer {
+    position: relative;
+    top: -170rpx;
+    height: 598rpx;
+    width: 598rpx;
+}
+
+.disAnimation {
+    animation: disc 4s linear infinite;
+    animation-delay: 1s;
+}
+
+@keyframes disc {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+~~~
+

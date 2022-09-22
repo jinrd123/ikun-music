@@ -6,7 +6,7 @@
     <!-- 摇杆 -->
     <image class="needle {{isPlay?'needleRotate':''}}" src="/static/images/song/needle.png"/>
     <!-- 磁盘 -->
-    <view class="discContainer">
+    <view class="discContainer {{isPlay?'disAnimation':''}}">
         <image class="disc" src="/static/images/song/disc.png"/>
         <image class="musicImg" src="/static/images/nvshen.jpg"/>
     </view>
