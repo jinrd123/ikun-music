@@ -1,4 +1,4 @@
-// pages/songDetail/songDetail.js
+import request from '../../utils/request';
 Page({
 
   /**
@@ -6,6 +6,7 @@ Page({
    */
   data: {
     isPlay: true,//判断音乐是否正在播放，控制动画效果
+    song: {},//歌曲详情对象
   },
 
   /**
@@ -13,7 +14,7 @@ Page({
    */
   onLoad(options) {
     let musicId = options.musicId;
-    console.log(musicId)
+    this.getMusicInfo(musicId);
   },
 
   //点击播放/暂停的回调
@@ -22,6 +23,18 @@ Page({
     //修改播放状态
     this.setData({
       isPlay
+    })
+  },
+
+  //获取音乐详情的功能函数
+  async getMusicInfo(musicId) {
+    let songData = await request('/song/detail', {ids: musicId})
+    this.setData({
+      song: songData.songs[0],
+    })
+    //动态修改窗口标题
+    wx.setNavigationBarTitle({
+      title: this.data.song.name,
     })
   },
 

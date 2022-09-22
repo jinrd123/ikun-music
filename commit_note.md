@@ -1641,3 +1641,15 @@ onLoad(options) {
 },
 ~~~
 
+# forty-fourth commit
+
+1.songDetail页面在onLoad中通过options对象拿到歌曲id之后，发请求获取歌曲详细信息，然后动态展示歌曲信息。
+
+歌曲名称通过页面标题进行显示：这里用到动态设置页面标题的api：
+
+~~~js
+wx.setNavigationBarTitle({
+  title: this.data.song.name,
+})
+~~~
+

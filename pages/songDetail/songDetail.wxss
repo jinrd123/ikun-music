@@ -47,7 +47,7 @@
 }
 
 .disAnimation {
-    animation: disc 4s linear infinite;
+    animation: disc 8s linear infinite;
     animation-delay: 1s;
 }
 
