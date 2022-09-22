@@ -25,6 +25,17 @@
     left: 60rpx;
     width: 192rpx;
     height: 274rpx;
+    /* 设置旋转中心 */
+    transform-origin: 40rpx 0;
+    /* 歌曲未播放时的角度 */
+    transform: rotate(-20deg);
+    /* 过渡效果 */
+    transition: transform 1s;
+}
+
+.needleRotate {
+    /* 歌曲播放时覆盖上面的旋转角度 */
+    transform: rotate(0deg);
 }
 
 /* 磁盘 */
@@ -55,7 +66,7 @@
     bottom: 0;
     left: 0;
     margin: auto;
-    
+
     width: 370rpx;
     height: 370rpx;
     border-radius: 50%;

@@ -1512,3 +1512,40 @@ onLoad(options) {
 }
 ~~~
 
+# forty commit
+
+## 知识点
+
+* `transform-origin: x  y`：修改transform（`transform: rotate(...deg);`）的移动中心点，如果不修改，默认是元素的正中心位置；修改时`x  y`从元素的左上角为0 0坐标。
+* `transform: rotate(...deg);`旋转deg角度，正为顺时针，负为逆时针
+* `transition: transfrom 1s`：transition：样式名  时间 ，即此元素的指定样式发生改变时在指定时间内完成过渡。
+
+## 1.摇杆动画实现
+
+通过data中的isPlay动态控制样式.needleRotate：
+
+`<image class="needle {{isPlay?'needleRotate':''}}" src="/static/images/song/needle.png"/>`
+
+~~~css
+/* 摇杆 */
+.needle {
+    position: relative;
+    z-index: 99;
+    top: -40rpx;
+    left: 60rpx;
+    width: 192rpx;
+    height: 274rpx;
+    /* 设置旋转中心 */
+    transform-origin: 40rpx 0;
+    /* 歌曲未播放时的角度 */
+    transform: rotate(-20deg);
+    /* 过渡效果 */
+    transition: transform 1s;
+}
+
+.needleRotate {
+    /* 歌曲播放时覆盖上面的旋转角度 */
+    transform: rotate(0deg);
+}
+~~~
+
