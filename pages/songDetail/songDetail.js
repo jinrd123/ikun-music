@@ -12,7 +12,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    let musicId = options.musicId;
+    console.log(musicId)
   },
 
   //点击播放/暂停的回调

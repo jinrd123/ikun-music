@@ -43,6 +43,14 @@ Page({
     })
   },
 
+  //跳转至songDetail页面
+  toSongDetail(event) {
+    let song = event.currentTarget.dataset.song;
+    wx.navigateTo({
+      //路由传参query参数，携带歌曲id
+      url: '/pages/songDetail/songDetail?musicId=' + song.id
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

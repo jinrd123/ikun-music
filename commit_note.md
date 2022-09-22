@@ -1602,3 +1602,42 @@ c3关键帧动画：
 # forty-second commit 
 
 1.songDetail页面底部控制区域的搭建
+
+# forty-third commit
+
+1.recommendSong页面点击歌曲之后跳转至songDetail页面，并通过路由传参
+
+路由跳转传参：query参数
+
+~~~js
+wx.navigateTo({
+    url: '/pages/songDetail/songDetail?key=value'
+})
+~~~
+
+目标页面通过onLoad中的options参数获取路由转跳的query参数，options是一个对象，里面的键值对即为路由传递query参数的键值对。
+
+由于小程序路由query参数有长度限制，我们不能把recommendSong页面中被点击的歌曲的全部信息的对象传递给songDetail页面，我们只传递歌曲的id，在songDetail页面通过歌曲id重新发送请求获取歌曲数据
+
+recommendSong页面歌曲点击回调：
+
+~~~js
+//跳转至songDetail页面
+toSongDetail(event) {
+  let song = event.currentTarget.dataset.song;
+  wx.navigateTo({
+    //路由传参query参数，携带歌曲id
+    url: '/pages/songDetail/songDetail?musicId=' + song.id
+  })
+},
+~~~
+
+songDetail页面onLoad生命周期函数：
+
+~~~js
+onLoad(options) {
+  let musicId = options.musicId;
+  console.log(musicId)
+},
+~~~
+
