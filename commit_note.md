@@ -1336,3 +1336,16 @@ onReachBottom() {
 
 
 
+# thirty-sixth commit
+
+## 1.应用小程序内置日期动态显示recommendSong页面日期
+
+~~~js
+onLoad(options) {
+  this.setData({
+    day: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+  })
+},
+~~~
+
