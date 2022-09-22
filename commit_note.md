@@ -1349,3 +1349,102 @@ onLoad(options) {
 },
 ~~~
 
+# thirty-seventh commit
+
+## 1.recommend页面内容区覆盖效果的实现（内容区域压着上面的图片）
+
+内容区（包括头部导航以及下面歌曲列白在内的父容器）设置相对定位并向上提一下，配合白色背景颜色加圆角实现
+
+~~~css
+.ListContainer {
+    /*相对定位，top为-20rpx向上提一下*/
+    position: relative;
+    top: -20rpx;
+    /*给整个父容器添加左右内边距，让内容不紧靠手机屏幕边缘，美观*/
+    padding: 0 20rpx;
+    /*圆角加白色背景颜色，产生覆盖上面的图片的效果*/
+    border-radius: 30rpx;
+    background: #fff;
+}
+~~~
+
+## 2.内容区顶部导航区，实现左右两文本，只需要右边元素右浮动即可
+
+~~~html
+<!-- 导航区域 -->
+<view class="listHeader">
+    <text>播放全部</text>
+    <text class="changeMore">多选</text>
+</view>
+~~~
+
+~~~css
+.listHeader {
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+.listHeader .changeMore {
+    float: right;
+}
+~~~
+
+## 3.歌曲列表区域
+
+主要结构是<scroll-view>，设置其高度：`height: calc(100vh - 380rpx);`，保证滑动时头部图片和导航栏固定。以下主要实现内部`scrollItem`的结构
+
+结构分析：
+
+​	一个`scrollItem`一行，为一个歌曲的信息，共分为三列
+
+* 第一列，一个图片（一行都以此图片的高度为标准）
+* 第二列，歌曲信息，在图片的右边，上下两行文本分别为歌名和歌手，两行平分高度
+* 第三列，一个iconfont图标，位于最右侧
+
+实现：
+
+​	结构：
+
+~~~html
+<scroll-view scroll-y class="listScroll">
+    <view class="scrollItem">
+        <!-- 第一列 -->
+        <image src="/static/images/nvshen.jpg"/>
+        <!-- 第二列 -->
+        <view class="musicInfo">
+            <text class="musicName">光辉岁月</text>
+            <text class="author">beyond</text>
+        </view>
+        <!-- 第三列 -->
+        <text class="iconfont icon-gengduo-shuxiang"></text>
+    </view>
+</scroll-view>
+~~~
+
+`scrollItem`设置flex布局，三列位于一行，第二列的文本上下两行，所以第二列也设置flex布局：`display: flex; flex-direction: column;`第二列的文本设置为图片高度的一半（这一行都以左边图片的高度为标准），并设置文字垂直居中即可
+
+~~~css
+.musicInfo text {
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 24rpx;
+    /*歌名和歌手设置单行文本溢出*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+~~~
+
+第三列：首先通过绝对定位移动到最右边：`  position: absolute;  right: 0;`，并设置垂直居中： `height: 80rpx; line-height: 80rpx;`，因为本身是一个iconfont图标，比较小，为了优化用户体验便于点击，为其设置宽高（其父元素`scrollItem`为flex布局之后，所有子元素都获得块元素的性质---可以设置宽高，并且位于一行或者一列），但是因为iconfont设置了宽度，图标可能离右边远了，我们可以设置：`text-align: right;`来使其向右移动（而不是常用的`text-align: center;`）
+
+~~~css
+.scrollItem .iconfont {
+    position: absolute;
+    right: 0;
+    width: 80rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: right;
+}
+~~~
+

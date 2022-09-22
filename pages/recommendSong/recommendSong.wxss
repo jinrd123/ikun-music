@@ -25,3 +25,66 @@
 .header .date .day {
     font-size: 38rpx;
 }
+
+/* 内容区域 */
+.ListContainer {
+    position: relative;
+    top: -20rpx;
+    padding: 0 20rpx;
+    border-radius: 30rpx;
+    background: #fff;
+}
+
+/* 内容区域--头部导航 */
+
+.listHeader {
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+.listHeader .changeMore {
+    float: right;
+}
+
+/* 内容区域--歌曲列表 */
+
+.listScroll {
+    height: calc(100vh - 380rpx);
+} 
+
+.scrollItem {
+    display: flex;
+    position: relative;
+    margin-bottom: 20rpx;
+}
+
+.scrollItem image {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 8rpx;
+}
+
+.musicInfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20rpx;
+}
+
+.musicInfo text {
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 24rpx;
+    /*歌名和歌手设置单行文本溢出*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scrollItem .iconfont {
+    position: absolute;
+    right: 0;
+    width: 80rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: right;
+}

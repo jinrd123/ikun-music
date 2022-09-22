@@ -7,4 +7,205 @@
             <text class="month"> {{month}}</text>
         </view>
     </view>
+    
+    <!-- 列表区域 -->
+    <view class="ListContainer">
+        <!-- 导航区域 -->
+        <view class="listHeader">
+            <text>播放全部</text>
+            <text class="changeMore">多选</text>
+        </view>
+
+        <!-- 内容区域 -->
+        <scroll-view scroll-y class="listScroll">
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+            <view class="scrollItem">
+                <!-- 第一列 -->
+                <image src="/static/images/nvshen.jpg"/>
+                <!-- 第二列 -->
+                <view class="musicInfo">
+                    <text class="musicName">光辉岁月</text>
+                    <text class="author">beyond</text>
+                </view>
+                <!-- 第三列 -->
+                <text class="iconfont icon-gengduo-shuxiang"></text>
+            </view>
+        </scroll-view>
+    </view>
 </view>
