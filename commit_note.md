@@ -1719,3 +1719,64 @@ changePlayState(isPlay) {
 },
 ~~~
 
+# forty-seventh commit
+
+## 1.利用App实例存储songDetail页面的歌曲播放信息，解决songDetail页面返回之后再进入同一首歌曲歌曲播放状态不正确的问题
+
+问题：一首歌曲正在播放，我们点击返回recommendSong页面，再回到这个歌曲页面，歌曲状态为未播放（isPlay：false）
+
+我们可以用本地存储的方式存储歌曲播放信息（歌曲id，是否在播放），我们还可以借助app.js中的App对象：
+
+我们在App对象中可以自定义对象来存储信息，然后在任意组件中通过`getApp`方法（`const appInstance = getApp();`）拿到App实例对象，然后就可以访问到（或修改）我们自定义的对象信息了。
+
+app.js：(自定义对象用来存储信息)
+
+~~~js
+App({
+  globalData: {
+    isMusicPlay: false,
+    musicId: '',
+  },
+  ...
+}
+~~~
+
+songDetail.js：（拿到App实例，进而访问信息）
+
+~~~js
+import request from '../../utils/request';
+const appInstance = getApp();
+Page({
+  ...
+  onLoad(options) {
+	...
+    //读取App实例身上存储的音乐播放信息
+    if(appInstance.globalData.isMusicPlay && appInstance.globalData.musicId === musicId) {
+      this.setData({
+        isPlay: true,
+      })
+    }
+	...
+	//songDetail中歌曲的播放信息更改了同步更改App实例中存储的相关信息
+    this.backgroundAudioManager = wx.getBackgroundAudioManager();
+    this.backgroundAudioManager.onPlay(()=>{
+      this.changePlayState(true);
+      //更新App存储
+      appInstance.globalData.musicId = musicId;
+      appInstance.globalData.isMusicPlay = true;
+    });
+    this.backgroundAudioManager.onPause(()=>{
+      this.changePlayState(false);
+      //更新App存储
+      appInstance.globalData.isMusicPlay = false;
+    });
+    this.backgroundAudioManager.onStop(()=>{
+      this.changePlayState(false);
+      //更新App存储
+      appInstance.globalData.isMusicPlay = false;
+    });
+  }
+  ...
+})
+~~~
+

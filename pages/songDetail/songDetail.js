@@ -1,4 +1,5 @@
 import request from '../../utils/request';
+const appInstance = getApp();
 Page({
 
   /**
@@ -19,18 +20,31 @@ Page({
     this.setData({
       musicId,
     })
+
+    //判断当前页面音乐是否在播放
+    if(appInstance.globalData.isMusicPlay && appInstance.globalData.musicId === musicId) {
+      this.setData({
+        isPlay: true,
+      })
+    }
+
+
     this.getMusicInfo(musicId);
     //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
     this.backgroundAudioManager = wx.getBackgroundAudioManager();
     this.backgroundAudioManager.onPlay(()=>{
       this.changePlayState(true);
+      appInstance.globalData.musicId = musicId;
+      appInstance.globalData.isMusicPlay = true;
     });
     this.backgroundAudioManager.onPause(()=>{
       this.changePlayState(false);
+      appInstance.globalData.isMusicPlay = false;
     });
     //当用户点击关闭悬窗
     this.backgroundAudioManager.onStop(()=>{
       this.changePlayState(false);
+      appInstance.globalData.isMusicPlay = false;
     });
   },
 
