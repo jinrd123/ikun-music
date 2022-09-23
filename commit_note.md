@@ -1653,3 +1653,28 @@ wx.setNavigationBarTitle({
 })
 ~~~
 
+# forty-fifth commit
+
+## 1.songDetail页面音乐的播放与暂停功能的实现
+
+* `wx.getBackgroundAudioManager();`创建音乐控制实例，为其设置src的title属性之后指定音乐将会播放；其实例调用`pause`方法音乐就会暂停。
+
+在点击播放与暂停按钮的回调中调用以下控制函数：
+
+~~~js
+//控制音乐播放/暂停的功能函数
+async musicControl(isPlay, musicId) {
+  //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
+  let backgroundAudioManager = wx.getBackgroundAudioManager();
+  if(isPlay) {//处理音乐播放
+    let musicLinkData = await request('/song/url', {id: musicId})
+    let musicLink = musicLinkData.data[0].url;
+    backgroundAudioManager.src = musicLink;
+    backgroundAudioManager.title = this.data.song.name;
+  }else {//处理音乐暂停
+    backgroundAudioManager.pause();
+  }
+},
+~~~
+
+## 2.真机中使音乐可以后台播放，使用全局配置项——`"requiredBackgroundModes": ["audio"]`

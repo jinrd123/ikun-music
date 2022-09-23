@@ -15,7 +15,7 @@
     <view class="musicControl">
         <text class="iconfont icon-23_shunxubofang"></text>
         <text class="iconfont icon-shangyishoushangyige"></text>
-        <text class="iconfont {{isPlay?'icon-zanting':'icon-zanting1'}} big" bindtap="handleMusicPlay"></text>
+        <text class="iconfont {{isPlay?'icon-zanting1':'icon-zanting'}} big" bindtap="handleMusicPlay"></text>
         <text class="iconfont icon-xiayigexiayishou"></text>
         <text class="iconfont icon-24gl-playlistMusic"></text>
     </view>
