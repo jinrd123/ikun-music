@@ -1,3 +1,4 @@
+import PubSub from 'pubsub-js';
 import request from '../../utils/request';
 const appInstance = getApp();
 Page({
@@ -93,6 +94,22 @@ Page({
     }else {
       backgroundAudioManager.pause();
     }
+  },
+
+
+  //点击切歌的回调
+  handleSwitch(event) {
+    let type = event.currentTarget.id;
+    //在消息发布之前订阅recommendSong页面的消息（准备接收）
+    PubSub.subscribe('musicId', (msg, musicId) => {
+      console.log(musicId);
+
+      //取消订阅
+      PubSub.unsubscribe('musicId');
+    })
+
+    //发布消息数据给recommendSong页面
+    PubSub.publish('switchType', type);
   },
 
 

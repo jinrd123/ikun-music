@@ -18,7 +18,7 @@
 
         <!-- 内容区域 -->
         <scroll-view scroll-y class="listScroll">
-            <view class="scrollItem" wx:for="{{recommendList}}" :wx:key="id" bindtap="toSongDetail" data-song="{{item}}" >
+            <view class="scrollItem" wx:for="{{recommendList}}" :wx:key="id" bindtap="toSongDetail" data-song="{{item}}" data-index="{{index}}">
                 <!-- 第一列 -->
                 <image src="{{item.al.picUrl}}"/>
                 <!-- 第二列 -->

@@ -1780,3 +1780,76 @@ Page({
 })
 ~~~
 
+# forty-eighth commit
+
+## 知识点：
+
+### 1.小程序使用npm包（pubsub）
+
+1. npm init---初始化package.json
+
+2. npm install pubsub-js
+
+3. 微信开发者工具--工具--构建npm--产生miniprogram_npm（npm install产生的node_modules下的包还不能为小程序所用，构建npm的目的就是把node_modules下的包转化为小程序可以用的包，放在miniprogram_npm文件夹下）
+
+### 2.消息订阅与发布实现任意页面间通讯（pubsub包的使用）
+
+* 通信页面：`import PubSub from 'pubsub-js';`
+* 消息发布页面（类似于`this.$emit`）：
+
+~~~js
+PubSub.publish('事件名称',传递参数)
+~~~
+
+* 消息订阅页面：`PubSub.subscribe('事件名称', 回调函数fun)`（类似于`this.$on('事件名称', 回调函数fun)`）
+  * `fun()`：接收两个参数，第一个参数为事件名称；第二个参数为消息发布页面的数据
+
+## 实现功能
+
+### 1.recommendSong页面与songDetail页面通信实现（songDetail页面点击了上一首或者下一首按钮之后从recommendSong页面获取到上一首或者下一首歌曲的id）
+
+因为songDetail页面的上一首和下一首按钮绑定了同一个回调函数，所以按钮被点击后，说明songDetail页面需要上一首或者下一歌曲的id了，**逻辑是：**（**按消息的传输顺序**）
+
+1. 首先（songDetail页面）切歌按钮的回调中发布一个标识信息（用来区别是上一首还是下一首）
+2. recommendSong页面订阅接收这个参数得知是上一首还是下一首，（recommendSong页面转跳至songDetail页面时会在data中保存点击的歌曲在数组中的index），结合data中的index在歌曲数组中找到下一首或者上一首歌。把歌曲的id信息发布。
+3. 然后songDetail页面订阅这个id信息（拿到歌曲id）。
+
+**在发布订阅的代码结构中：一定是先订阅，再发布。**
+
+songDetail页面的切歌点击回调：
+
+~~~js
+//点击切歌的回调
+handleSwitch(event) {
+  let type = event.currentTarget.id;
+  //在switchType消息发布之前订阅musicId（准备接收musicId）
+  PubSub.subscribe('musicId', (msg, musicId) => {
+    //拿到了musicId
+    console.log(musicId);
+    //因为这是一个按钮的回调函数，会执行多次函数体，（每次执行PubSub.subscribe都会增加一个订阅回调），所以我们在拿到musicId之后需要取消订阅
+    PubSub.unsubscribe('musicId');
+  })
+
+  //发布切歌消息给recommendSong页面
+  PubSub.publish('switchType', type);
+},
+~~~
+
+因为recommendSong页面相对于songDetail页面来说，是一直存在的页面，所以我们只需要在onLoad生命周期中进行订阅接收切歌信息，并在订阅的回调中发布歌曲id即可
+
+recommendSong页面的onLoad：
+
+~~~js
+//订阅来自songDetail页面发布的消息
+PubSub.subscribe('switchType', (msg, type) => {
+  let {recommendList, index} = this.data;
+  if(type === "pre") {
+    index -= 1;
+  }else {
+    index += 1;
+  }
+  let musicId = recommendList[index].id;
+  PubSub.publish('musicId', musicId);
+})
+~~~
+

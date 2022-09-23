@@ -14,9 +14,13 @@
     <!-- 底部控制播放区域 -->
     <view class="musicControl">
         <text class="iconfont icon-23_shunxubofang"></text>
-        <text class="iconfont icon-shangyishoushangyige"></text>
+
+        <text class="iconfont icon-shangyishoushangyige" id="pre" bindtap="handleSwitch"></text>
+
         <text class="iconfont {{isPlay?'icon-zanting1':'icon-zanting'}} big" bindtap="handleMusicPlay"></text>
-        <text class="iconfont icon-xiayigexiayishou"></text>
+        
+        <text class="iconfont icon-xiayigexiayishou" id="next" bindtap="handleSwitch"></text>
+        
         <text class="iconfont icon-24gl-playlistMusic"></text>
     </view>
 </view>
