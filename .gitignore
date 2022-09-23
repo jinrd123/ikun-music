@@ -1,0 +1,4 @@
+node_modules/
+
+# 构建生成的文件
+miniprogram_npm/
