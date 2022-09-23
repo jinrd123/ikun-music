@@ -1678,3 +1678,44 @@ async musicControl(isPlay, musicId) {
 ~~~
 
 ## 2.真机中使音乐可以后台播放，使用全局配置项——`"requiredBackgroundModes": ["audio"]`
+
+# forty-sixth commit
+
+真机中，除了songDetail页面的播放/暂停按钮之外，因为我们配置了音乐后台播放，所以手机系统会提供一个悬窗，里面有播放、暂停的控制按钮，同样能控制歌曲的播放与暂停，但是通过悬窗控制的播放暂停并没有修改data中的isPlay，所以歌曲状态与小程序中的不一致。
+
+## 1.通过音乐控制实例的监视方法，实现悬窗控制栏与小程序内部音乐播放状态的统一
+
+* `onPlay(fun)`：监视音乐播放时执行回调fun
+* `onPause(fun)`：监视音乐暂停时执行回调fun
+* `onstop(fun)`：监视后台音乐悬窗被关闭时执行回调fun
+
+~~~js
+onLoad(options) {
+  let musicId = options.musicId;
+  //将musicId更新至data中（公共区），因为请求歌曲播放地址时还需要使用
+  this.setData({
+    musicId,
+  })
+  this.getMusicInfo(musicId);
+  //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
+  this.backgroundAudioManager = wx.getBackgroundAudioManager();
+  this.backgroundAudioManager.onPlay(()=>{
+    this.changePlayState(true);
+  });
+  this.backgroundAudioManager.onPause(()=>{
+    this.changePlayState(false);
+  });
+  //当用户点击关闭悬窗
+  this.backgroundAudioManager.onStop(()=>{
+    this.changePlayState(false);
+  });
+},
+
+//修改音乐播放状态
+changePlayState(isPlay) {
+  this.setData({
+    isPlay,
+  })
+},
+~~~
+

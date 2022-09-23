@@ -20,16 +20,37 @@ Page({
       musicId,
     })
     this.getMusicInfo(musicId);
+    //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
+    this.backgroundAudioManager = wx.getBackgroundAudioManager();
+    this.backgroundAudioManager.onPlay(()=>{
+      this.changePlayState(true);
+    });
+    this.backgroundAudioManager.onPause(()=>{
+      this.changePlayState(false);
+    });
+    //当用户点击关闭悬窗
+    this.backgroundAudioManager.onStop(()=>{
+      this.changePlayState(false);
+    });
+  },
+
+  //修改音乐播放状态
+  changePlayState(isPlay) {
+    this.setData({
+      isPlay,
+    })
   },
 
   //点击播放/暂停的回调
   handleMusicPlay() {
     let isPlay = !this.data.isPlay;
+    /*
+    在onLoad中通过音乐控制对象设置了对音乐播放、暂停的监视，会自动更新isPlay状态
     //修改播放状态
     this.setData({
       isPlay
     })
-
+    */
 
     let {musicId} = this.data;
     //处理音乐播放与暂停
@@ -50,13 +71,11 @@ Page({
 
   //控制音乐播放/暂停的功能函数
   async musicControl(isPlay, musicId) {
-    //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
-    let backgroundAudioManager = wx.getBackgroundAudioManager();
     if(isPlay) {//处理音乐播放
       let musicLinkData = await request('/song/url', {id: musicId})
       let musicLink = musicLinkData.data[0].url;
-      backgroundAudioManager.src = musicLink;
-      backgroundAudioManager.title = this.data.song.name;
+      this.backgroundAudioManager.src = musicLink;
+      this.backgroundAudioManager.title = this.data.song.name;
     }else {
       backgroundAudioManager.pause();
     }
