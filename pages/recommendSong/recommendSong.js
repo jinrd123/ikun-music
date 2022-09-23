@@ -40,10 +40,17 @@ Page({
     PubSub.subscribe('switchType', (msg, type) => {
       let {recommendList, index} = this.data;
       if(type === "pre") {
+        //歌曲为第一首时点击上一首跳转到最后一首
+        (index === 0) && (index = recommendList.length)
         index -= 1;
       }else {
+        (index === recommendList.length - 1) && (index = -1)
         index += 1;
       }
+      //更新下标
+      this.setData({
+        index,
+      })
       let musicId = recommendList[index].id;
       PubSub.publish('musicId', musicId);
     })

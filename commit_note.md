@@ -1853,3 +1853,13 @@ PubSub.subscribe('switchType', (msg, type) => {
 })
 ~~~
 
+
+
+# forty-ninth commit
+
+## 1.切换歌曲功能的实现
+
+## 2.解决了悬窗与歌名不一致的bug
+
+获取歌曲详情调至歌曲播放之前即可
+

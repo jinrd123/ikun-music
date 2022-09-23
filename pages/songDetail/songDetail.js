@@ -29,7 +29,7 @@ Page({
       })
     }
 
-
+    //获取音乐详情信息
     this.getMusicInfo(musicId);
     //创建控制音乐播放的实例(这个实例一旦设置了src属性和title属性，就会自动播放src指定播放地址的歌曲)
     this.backgroundAudioManager = wx.getBackgroundAudioManager();
@@ -89,10 +89,10 @@ Page({
     if(isPlay) {//处理音乐播放
       let musicLinkData = await request('/song/url', {id: musicId})
       let musicLink = musicLinkData.data[0].url;
-      this.backgroundAudioManager.src = musicLink;
       this.backgroundAudioManager.title = this.data.song.name;
+      this.backgroundAudioManager.src = musicLink;
     }else {
-      backgroundAudioManager.pause();
+      this.backgroundAudioManager.pause();
     }
   },
 
@@ -100,10 +100,18 @@ Page({
   //点击切歌的回调
   handleSwitch(event) {
     let type = event.currentTarget.id;
+    //关闭当前播放的音乐
+    this.backgroundAudioManager.stop();
     //在消息发布之前订阅recommendSong页面的消息（准备接收）
     PubSub.subscribe('musicId', (msg, musicId) => {
-      console.log(musicId);
-
+      this.setData({
+        musicId,
+        isPlay: true,
+      })
+      //获取音乐详情信息
+      this.getMusicInfo(musicId);
+      //切换歌曲之后默认为播放状态
+      this.musicControl(true,musicId);
       //取消订阅
       PubSub.unsubscribe('musicId');
     })
