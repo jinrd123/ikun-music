@@ -1947,3 +1947,6 @@ updataApp(musicId, isMusicPlay) {
 },
 ~~~
 
+# fifty-second commit
+
+1.songDetail页面进度条区域静态搭建
