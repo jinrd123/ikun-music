@@ -1863,3 +1863,76 @@ PubSub.subscribe('switchType', (msg, type) => {
 
 获取歌曲详情调至歌曲播放之前即可
 
+# fiftieth commit
+
+## 1.代码优化：把songDetail页面的消息订阅移动到onLoad中，这样不用每次都订阅完成后再取消订阅
+
+## 2.代码优化：同一首歌曲切换播放与暂停状态用musicLink防止重复发送请求
+
+~~~js
+//控制音乐播放/暂停的功能函数
+async musicControl(isPlay, musicId, musicLink) {
+  if(isPlay) {
+    //增加判断：如果调用这个函数时没传入musicLink那么我们才发送请求；然后在同一首歌的播放与暂停调用musicControl时传入musicLink
+    if(!musicLink) {
+      let musicLinkData = await request('/song/url', {id: musicId})
+      musicLink = musicLinkData.data[0].url;
+    }
+    this.setData({
+      musicLink,
+    })
+    this.backgroundAudioManager.title = this.data.song.name;
+    this.backgroundAudioManager.src = musicLink;
+  }else {
+    this.backgroundAudioManager.pause();
+  }
+},
+~~~
+
+## 3.修复bug：recommendSong页面进入一首歌曲，然后切歌（上一首或者下一首）,然后返回recommendSong页面，再次进入正在播放的歌曲，歌曲显示并不是播放状态
+
+原因分析：
+
+我们在songDetail页面的onLoad生命周期中通过全局音乐播放对象（`this.backgroundAudioManager = wx.getBackgroundAudioManager();`）设置了音乐播放状态改变的监听回调（音乐播放时、暂停时、结束时、关闭悬窗时）
+
+~~~js
+this.backgroundAudioManager = wx.getBackgroundAudioManager();
+this.backgroundAudioManager.onPlay(()=>{
+  this.changePlayState(true);
+  /*********以下注释掉的这行代码就是错误根源**********/
+  //appInstance.globalData.musicId = musicId;
+  appInstance.globalData.isMusicPlay = true;
+});
+this.backgroundAudioManager.onPause(()=>{
+  this.changePlayState(false);
+  appInstance.globalData.isMusicPlay = false;
+});
+//当用户点击关闭悬窗
+this.backgroundAudioManager.onStop(()=>{
+  this.changePlayState(false);
+  appInstance.globalData.isMusicPlay = false;
+});
+this.backgroundAudioManager.onEnded(()=>{
+  this.changePlayState(false);
+  appInstance.globalData.isMusicPlay = false;
+});
+~~~
+
+我们从recommendSong页面进入一个songDetail页面是通过判断app.js
+
+中存放的（正在播放的音乐）信息与点击的音乐的信息是否一致来更改songDetail的data中的isPlay：
+
+~~~js
+if(appInstance.globalData.isMusicPlay && appInstance.globalData.musicId == musicId) {
+  this.setData({
+    isPlay: true,
+  })
+}
+~~~
+
+从而达到打开一个songDetail页面时正确显示歌曲的播放状态。
+
+但是上面的错误代码中：此时播放监视的回调运行环境是onLoad，这里面的musicId始终都是第一次进来时那首歌曲的id（这个musicId是路由传参通过options带来的，songDetail页面切歌时一直没销毁，所以musicId一直也是同一个），所以切歌之后app.js中存放的信息得不到正确的更新，以至于再打开切歌之后正在播放的歌曲，歌曲播放状态仍然是未播放。
+
+修改办法：注释掉onLoad中修改app.js中musicId的代码，保留切歌回调函数中修改app.js中数据的代码即可。
+
