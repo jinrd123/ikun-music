@@ -2012,3 +2012,10 @@ this.backgroundAudioManager.onEnded(()=>{
 });
 ~~~
 
+# fifty-sixth commit
+
+songDetail页面歌曲切换模式（暂未开发）,开发思路：
+
+发布切歌消息的时候添加一个参数，用来标识切歌模式（乱序随机模式、顺序模式）,然后recommendSong页面返回musicId的时候随机返回一个id（随机播放模式），需要考虑随机数返回的musicId还是当前这个歌曲，需要再重新随机一个。
+
+1.连接主页与每日推荐页——`wx.navigateTo({url:'/pages/recommendSong/recommendSong'})`
