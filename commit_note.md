@@ -2019,3 +2019,18 @@ songDetail页面歌曲切换模式（暂未开发）,开发思路：
 发布切歌消息的时候添加一个参数，用来标识切歌模式（乱序随机模式、顺序模式）,然后recommendSong页面返回musicId的时候随机返回一个id（随机播放模式），需要考虑随机数返回的musicId还是当前这个歌曲，需要再重新随机一个。
 
 1.连接主页与每日推荐页——`wx.navigateTo({url:'/pages/recommendSong/recommendSong'})`
+
+# fifty-seventh commit
+
+## 知识点：
+
+给input的placeholder设置样式（小程序特性，非h5项目适用）：
+
+`<input type="text" placeholder="搜索歌曲" placeholder-class="placeholder"/>`
+
+`.placeholder{font-size:28rpx;}`
+
+## 完成内容
+
+1.搜索页头部区域的静态搭建
+

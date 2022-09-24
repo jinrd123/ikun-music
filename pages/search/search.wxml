@@ -1,0 +1,9 @@
+<view class="searchContainer">
+    <view class="header">
+        <view class="searchInput">
+            <text class="iconfont icon-sousuo searchIcon"></text>
+            <input type="text" placeholder="搜索歌曲" placeholder-class="placeholder"/>
+        </view>
+        <text class="cancel">取消</text>
+    </view>
+</view>
