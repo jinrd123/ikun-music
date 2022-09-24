@@ -1976,3 +1976,20 @@ this.backgroundAudioManager.onTimeUpdate(()=>{
 })
 ~~~
 
+# fity-fourth commit
+
+## 1.实现进度条的动态移动
+
+我们是用一个细长的<view>模拟的实时进度条，把它定位到总进度条的左边（`position:absolute;top:0;left:0`）,我们在html结构中给实时进度条的<view>动态添加样式（动态设置宽度）：
+
+~~~html
+<!-- 总进度条 -->
+<view class="barControl">
+    <!-- 实时进度条 -->
+    <view class="audio-currentTime-Bar" style="width:{{currentWidth + 'rpx'}}">
+        <!-- 小圆球 -->
+        <view class="audio-circle"></view>
+    </view>
+</view>
+~~~
+

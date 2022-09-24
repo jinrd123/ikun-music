@@ -14,6 +14,7 @@ Page({
     musicLink: '',//音乐播放链接，优化播放暂停时（防止重复发请求）使用
     currentTime: '00:00',//当前播放进度
     durationTime: '00:00',//音乐总时长
+    currentWidth: 0,//实时进度条的宽度
   },
 
   /**
@@ -75,8 +76,11 @@ Page({
     this.backgroundAudioManager.onTimeUpdate(()=>{
       //格式化实时播放时间
       let currentTime = moment(this.backgroundAudioManager.currentTime * 1000).format("mm:ss");
+      //进度条实时宽度
+      let currentWidth = this.backgroundAudioManager.currentTime/this.backgroundAudioManager.duration * 450;
       this.setData({
         currentTime,
+        currentWidth,
       })
     })
 

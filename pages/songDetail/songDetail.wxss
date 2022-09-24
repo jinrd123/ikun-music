@@ -119,7 +119,6 @@
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
-    border: 1rpx solid red;
 }
 
 .barControl {
@@ -130,11 +129,11 @@
     align-self: center;
 }
 
+/* 实时进度条 */
 .audio-currentTime-Bar {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100rpx;
     z-index: 1;
     height: 4rpx;
     background-color: red;
