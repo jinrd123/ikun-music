@@ -50,9 +50,15 @@ Page({
       this.changePlayState(false);
       appInstance.globalData.isMusicPlay = false;
     });
+    //监听音乐播放自然结束
     this.backgroundAudioManager.onEnded(()=>{
-      this.changePlayState(false);
-      appInstance.globalData.isMusicPlay = false;
+        //自动切换至下一首音乐
+        PubSub.publish('switchType','next');
+        //将实时进度条长度还原成0
+        this.setData({
+          currentWidth: 0,
+          currentTime: '00:00',
+        })
     });
     
     //原本属于切歌的回调函数中，移动到这里

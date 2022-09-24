@@ -1993,3 +1993,22 @@ this.backgroundAudioManager.onTimeUpdate(()=>{
 </view>
 ~~~
 
+# fifty-fifth commit
+
+## 1.歌曲控制对象监听onEnded事件实现歌曲播放结束自动播放下一首
+
+（**其实切歌的逻辑就是发布一个switchType事件**，之后请求信息、开始播放等一些列逻辑都在recommendSong页面发来musicId之后我们订阅musicId的回调函数中执行）
+
+~~~js
+//监听音乐播放自然结束
+this.backgroundAudioManager.onEnded(()=>{
+    //自动切换至下一首音乐
+    PubSub.publish('switchType','next');
+    //将实时进度条长度还原成0
+    this.setData({
+      currentWidth: 0,
+      currentTime: '00:00',
+    })
+});
+~~~
+
