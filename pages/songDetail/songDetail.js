@@ -1,4 +1,5 @@
 import PubSub from 'pubsub-js';
+import moment from 'moment';
 import request from '../../utils/request';
 const appInstance = getApp();
 Page({
@@ -11,6 +12,8 @@ Page({
     song: {},//歌曲详情对象
     musicId: '',//音乐id，获取歌曲详情、歌曲播放地址使用
     musicLink: '',//音乐播放链接，优化播放暂停时（防止重复发请求）使用
+    currentTime: '00:00',//当前播放进度
+    durationTime: '00:00',//音乐总时长
   },
 
   /**
@@ -68,6 +71,15 @@ Page({
     //点开一首歌曲自动开始播放
     this.musicControl(true, musicId);
 
+    //监听音乐实时播放的进度
+    this.backgroundAudioManager.onTimeUpdate(()=>{
+      //格式化实时播放时间
+      let currentTime = moment(this.backgroundAudioManager.currentTime * 1000).format("mm:ss");
+      this.setData({
+        currentTime,
+      })
+    })
+
   },
 
   //修改音乐播放状态
@@ -91,8 +103,11 @@ Page({
   //获取音乐详情的功能函数
   async getMusicInfo(musicId) {
     let songData = await request('/song/detail', {ids: musicId})
+    //利用moment库将毫秒转化成指定格式的字符串
+    let durationTime = moment(songData.songs[0].dt).format('mm:ss');
     this.setData({
       song: songData.songs[0],
+      durationTime,
     })
     //动态修改窗口标题
     wx.setNavigationBarTitle({

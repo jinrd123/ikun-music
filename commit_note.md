@@ -1950,3 +1950,29 @@ updataApp(musicId, isMusicPlay) {
 # fifty-second commit
 
 1.songDetail页面进度条区域静态搭建
+
+
+
+# fifty-third commit
+
+## 1.利用moment库格式化音乐播放总时长
+
+歌曲详情里的dt属性即为音乐总毫秒数，moment库可以将毫秒数转化成指定格式的字符串
+
+安装moment库：npm install moment
+
+格式化音乐总时长：`let durationTime = moment(songData.songs[0].dt).format('mm:ss');`
+
+## 2.背景音频播放实例对象实时监听音乐播放（onLoad）
+
+~~~js
+//监听音乐实时播放的进度
+this.backgroundAudioManager.onTimeUpdate(()=>{
+  //格式化实时播放时间
+  let currentTime = moment(this.backgroundAudioManager.currentTime * 1000).format("mm:ss");
+  this.setData({
+    currentTime,
+  })
+})
+~~~
+
