@@ -1936,3 +1936,14 @@ if(appInstance.globalData.isMusicPlay && appInstance.globalData.musicId == music
 
 修改办法：注释掉onLoad中修改app.js中musicId的代码，保留切歌回调函数中修改app.js中数据的代码即可。
 
+# fifty-first commit
+
+在songDetail页面中封装了修改app.js中globalData的函数，并删除了一些注释
+
+~~~js
+updataApp(musicId, isMusicPlay) {
+  getApp().globalData.musicId = musicId;
+  getApp().globalData.isMusicPlay = isMusicPlay;
+},
+~~~
+

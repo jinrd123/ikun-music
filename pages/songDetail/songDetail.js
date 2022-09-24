@@ -35,7 +35,6 @@ Page({
     this.backgroundAudioManager = wx.getBackgroundAudioManager();
     this.backgroundAudioManager.onPlay(()=>{
       this.changePlayState(true);
-      //appInstance.globalData.musicId = musicId;
       appInstance.globalData.isMusicPlay = true;
     });
     this.backgroundAudioManager.onPause(()=>{
@@ -52,24 +51,22 @@ Page({
       appInstance.globalData.isMusicPlay = false;
     });
     
-    //原本在切歌的回调函数中，移动到这里
+    //原本属于切歌的回调函数中，移动到这里
     PubSub.subscribe('musicId', (msg, musicId) => {
       this.setData({
         musicId,
         isPlay: true,
       })
       //修改app.js中存储的歌曲播放状态
-      appInstance.globalData.musicId = musicId;
-      appInstance.globalData.isMusicPlay = true;
-      console.log("切歌之后："+appInstance.globalData.musicId);
-      console.log("切歌之后："+appInstance.globalData.isMusicPlay);
+      this.updataApp(musicId, true);
       //获取音乐详情信息
       this.getMusicInfo(musicId);
       //切换歌曲之后默认为播放状态
       this.musicControl(true,musicId);
-      //无需再取消订阅
-      // PubSub.unsubscribe('musicId');
     })
+
+    //点开一首歌曲自动开始播放
+    this.musicControl(true, musicId);
 
   },
 
@@ -83,19 +80,12 @@ Page({
   //点击播放/暂停的回调
   handleMusicPlay() {
     let isPlay = !this.data.isPlay;
-    /*
-    在onLoad中通过音乐控制对象设置了对音乐播放、暂停的监视，会自动更新isPlay状态
-    //修改播放状态
-    this.setData({
-      isPlay
-    })
-    */
 
     let {musicId, musicLink} = this.data;
     //处理音乐播放与暂停
     this.musicControl(isPlay, musicId, musicLink);
-    appInstance.globalData.musicId = musicId;
-    appInstance.globalData.isMusicPlay = true;
+    //更新app.js中的数据
+    this.updataApp(musicId, true);
   },
 
   //获取音乐详情的功能函数
@@ -133,27 +123,16 @@ Page({
     let type = event.currentTarget.id;
     //关闭当前播放的音乐
     this.backgroundAudioManager.stop();
-    //在消息发布之前订阅recommendSong页面的消息（准备接收）
-    // PubSub.subscribe('musicId', (msg, musicId) => {
-    //   this.setData({
-    //     musicId,
-    //     isPlay: true,
-    //   })
-    //   //修改app.js中存储的歌曲播放状态
-    //   appInstance.globalData.musicId = musicId;
-    //   appInstance.globalData.isMusicPlay = true;
-    //   //获取音乐详情信息
-    //   this.getMusicInfo(musicId);
-    //   //切换歌曲之后默认为播放状态
-    //   this.musicControl(true,musicId);
-    //   //取消订阅
-    //   PubSub.unsubscribe('musicId');
-    // })
 
     //发布消息数据给recommendSong页面
     PubSub.publish('switchType', type);
   },
 
+  //更新app.js中存放的音乐播放信息
+  updataApp(musicId, isMusicPlay) {
+    getApp().globalData.musicId = musicId;
+    getApp().globalData.isMusicPlay = isMusicPlay;
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
