@@ -31,7 +31,7 @@
 }
 
 .placeholder {
-    font-size: 28rpx;
+    font-size: 26rpx;
 }
 
 /* 热搜榜 */
@@ -56,4 +56,10 @@
 
 .hotItem .order {
     margin: 0 10rpx;
+}
+
+.hotItem .iconImg {
+    width: 35rpx;
+    height: 20rpx;
+    margin-left: 10rpx;
 }

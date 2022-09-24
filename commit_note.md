@@ -2037,3 +2037,7 @@ songDetail页面歌曲切换模式（暂未开发）,开发思路：
 # fifty-eighth commit
 
 1.热搜榜静态搭建
+
+# fifty-ninth commit 
+
+1.placeholder、热搜榜数据动态展示
