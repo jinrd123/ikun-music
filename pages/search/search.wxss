@@ -63,3 +63,26 @@
     height: 20rpx;
     margin-left: 10rpx;
 }
+
+/* 搜索内容展示 */
+
+.searchContent {
+    color: #d43c33;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 24rpx;
+    border-bottom: 1rpx solid #d43c33;
+}
+
+.searchItem {
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+}
+
+.searchItem .content {
+    flex: 1;
+    margin-left: 20rpx;
+    border-bottom: 1rpx solid #eee;
+    font-size: 26rpx;
+}

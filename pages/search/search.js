@@ -48,6 +48,10 @@ Page({
 
   //表单内容改变时获取关键字模糊匹配的请求方法
   async getSearchList() {
+    //防止无内容搜索请求导致请求参数不足报错
+    if(!this.data.searchContent) {
+      return;
+    }
     let searchListData = await request('/search', {keywords: this.data.searchContent, limit: 10});
     this.setData({
       searchList: searchListData.result.songs,
