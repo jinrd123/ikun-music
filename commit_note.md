@@ -2100,3 +2100,27 @@ Page({
 }
 ~~~
 
+# sixty -first commit
+
+## 1.修改<input>输入事件的优化逻辑----->函数防抖（频繁操作结束一定时间之后，只执行一次代码逻辑），因为如果使用节流进行优化的话，如果在节流的时间间隔内再次输入的内容不会生效，不合理。
+
+首先还是需要一个全局变量isSending，用来存放计时器。
+
+~~~js
+//表单内容发生改变的回调
+handleInputChange(event) {
+  //更新searchContent的状态数据
+  this.setData({
+    searchContent: event.detail.value.trim(),
+  })
+  
+    
+  //防抖处理的逻辑
+  clearTimeout(isSending);
+  isSending = setTimeout(()=>{
+    //发请求获取关键字模糊匹配的数据
+    this.getSearchList();
+  },300);
+},
+~~~
+

@@ -1,5 +1,5 @@
 import request from '../../utils/request';
-let isSending = false;
+let isSending = null;
 Page({
 
   /**
@@ -36,14 +36,12 @@ Page({
     this.setData({
       searchContent: event.detail.value.trim(),
     })
-    if(isSending) {
-      return;
-    }
-    isSending = true;
-    //发请求获取关键字模糊匹配的数据
-    this.getSearchList();
-    setTimeout(()=>{
-      isSending = false;
+
+    //请求函数进行防抖优化处理
+    clearTimeout(isSending);
+    isSending = setTimeout(()=>{
+      //发请求获取关键字模糊匹配的数据
+      this.getSearchList();
     },300);
   },
 
