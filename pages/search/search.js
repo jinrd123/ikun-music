@@ -10,6 +10,7 @@ Page({
     hotList: [],//热搜榜数据
     searchContent: '',//用户输入的表单项数据
     searchList: [],//关键字模糊匹配的数据
+    historyList: [],//搜索历史记录
   },
 
   /**
@@ -18,6 +19,8 @@ Page({
   onLoad(options) {
     //初始化数据
     this.getInitData();
+    //初始化本地搜索记录
+    this.getSearchHistory();
   },
 
   //获取初始化的数据
@@ -52,9 +55,37 @@ Page({
     if(!this.data.searchContent) {
       return;
     }
-    let searchListData = await request('/search', {keywords: this.data.searchContent, limit: 10});
+    let {historyList, searchContent} = this.data;
+    let searchListData = await request('/search', {keywords: searchContent, limit: 10});
     this.setData({
       searchList: searchListData.result.songs,
+    })
+    //将搜索的关键字添加到搜索历史记录中
+    if(historyList.indexOf(searchContent) !== -1) {
+      historyList.splice(historyList.indexOf(searchContent),1);
+    }
+    historyList.unshift(searchContent);
+    this.setData({
+      historyList,
+    })
+    wx.setStorageSync('searchHistory',historyList);
+  },
+
+  //获取本地历史记录的功能函数
+  getSearchHistory() {
+    let historyList = wx.getStorageSync('searchHistory');
+    if(historyList) {
+      this.setData({
+        historyList,
+      })
+    }
+  },
+
+  //清除搜索输入框的内容
+  clearSearchContent() {
+    this.setData({
+      searchContent: '',
+      searchList: [],
     })
   },
 

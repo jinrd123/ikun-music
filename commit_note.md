@@ -2133,3 +2133,12 @@ handleInputChange(event) {
 # sixty-third commit
 
 1.历史记录板块静态搭建
+
+# sixty-fourth commit
+
+1.历史记录的本地存储、动态添加历史记录
+
+这里在做<input>输入框右侧删除按钮的功能的时候（点击叉号，删除输入框的内容），给<input>动态绑定了value属性，`value="{{searchContent}}"`，通过`bindinput`回调又动态修改searchContent的值，手动实现了类似于`v-model`双向数据绑定的功能。点击叉号之后的逻辑只需要设置searchContent为空即可。
+
+（但这时候点击叉号没法进入相关回调，考虑元素层级问题，给叉号设置`z-index:10;`即可解决问题）
+

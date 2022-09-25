@@ -10,9 +10,18 @@
 }
 
 .searchInput {
+    position: relative;
     flex: 1;
     background-color: rgba(237, 237, 237, 0.3);
     border-radius: 30rpx;
+}
+
+.searchInput .clear {
+    position: absolute;
+    right: 15rpx;
+    top: 0;
+    font-size: 30rpx;
+    z-index: 10;
 }
 
 .cancel {

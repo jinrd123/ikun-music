@@ -3,7 +3,8 @@
     <view class="header">
         <view class="searchInput">
             <text class="iconfont icon-sousuo searchIcon"></text>
-            <input type="text" placeholder="{{placeholderContent}}" placeholder-class="placeholder" bindinput="handleInputChange"/>
+            <input type="text" value="{{searchContent}}" placeholder="{{placeholderContent}}" placeholder-class="placeholder" bindinput="handleInputChange"/>
+            <text class="clear" bindtap="clearSearchContent">x</text>
         </view>
         <text class="cancel">取消</text>
     </view>
@@ -26,47 +27,8 @@
         <!-- 搜索历史记录 -->
         <view class="history">
             <view class="title">历史</view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
-            </view>
-            <view class="historyItem">
-                你好
+            <view class="historyItem" wx:for="{{historyList}}" wx:key="{{item}}">
+                {{item}}
             </view>
             <!-- 删除 -->
             <text class="iconfont icon-shanchu delete"></text>
