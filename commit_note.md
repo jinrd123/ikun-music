@@ -2041,3 +2041,62 @@ songDetail页面歌曲切换模式（暂未开发）,开发思路：
 # fifty-ninth commit 
 
 1.placeholder、热搜榜数据动态展示
+
+# sixtieth commit
+
+## 知识点
+
+1.关于<input>
+
+<input>对应`bindinput`事件和`bindchange`事件，后者需要输入框失去焦点才触发。
+
+对于`bindinput`事件的回调，其返回值会更新到<input>输入框内，所以`bindinput`的回调函数不能是`async`函数，防止每次执行回调后输入框内容都强制更新为[object Promise]（async函数返回promise，再执行toString方法）
+
+对于<input>中发送的请求，我们可以单独把发送请求的逻辑封装成一个async函数。
+
+## 解决问题
+
+### 1.实现`bindinput`事件的模糊匹配请求部分并用函数节流对请求逻辑进行优化
+
+每次用户输入后都执行`bindinput`的回调函数，除了修改输入框内容，对于发送匹配请求的逻辑，我们不应该执行太频繁，需要对发送请求的逻辑代码进行节流。
+
+~~~js
+import request from '../../utils/request';
+let isSending = false;//----------------->供节流使用的全局变量
+Page({
+    
+  ...
+    
+  //表单内容发生改变的回调
+  handleInputChange(event) {
+    //更新searchContent的状态数据----------->无需节流的逻辑
+    this.setData({
+      searchContent: event.detail.value.trim(),
+    })
+    
+   	//通过全局变量isSending控制以下请求代码节流执行
+    if(isSending) {
+      return;
+    }
+    isSending = true;
+    //发请求获取关键字模糊匹配的数据----------->需要节流的逻辑
+    this.getSearchList();
+    setTimeout(()=>{
+      isSending = false;
+    },300);
+  },
+
+
+  //表单内容改变时获取关键字模糊匹配的请求方法
+  async getSearchList() {
+    let searchListData = await request('/search', {keywords: this.data.searchContent, limit: 10});
+    this.setData({
+      searchList: searchListData.result.songs,
+    })
+  },
+      
+  ...
+      
+}
+~~~
+

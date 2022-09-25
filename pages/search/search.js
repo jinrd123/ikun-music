@@ -1,4 +1,5 @@
 import request from '../../utils/request';
+let isSending = false;
 Page({
 
   /**
@@ -7,6 +8,8 @@ Page({
   data: {
     placeholderContent: '',//placeholder的内容
     hotList: [],//热搜榜数据
+    searchContent: '',//用户输入的表单项数据
+    searchList: [],//关键字模糊匹配的数据
   },
 
   /**
@@ -24,6 +27,32 @@ Page({
     this.setData({
       placeholderContent: placeholderData.data.showKeyword,
       hotList: hotListData.data,
+    })
+  },
+
+  //表单内容发生改变的回调
+  handleInputChange(event) {
+    //更新searchContent的状态数据
+    this.setData({
+      searchContent: event.detail.value.trim(),
+    })
+    if(isSending) {
+      return;
+    }
+    isSending = true;
+    //发请求获取关键字模糊匹配的数据
+    this.getSearchList();
+    setTimeout(()=>{
+      isSending = false;
+    },300);
+  },
+
+
+  //表单内容改变时获取关键字模糊匹配的请求方法
+  async getSearchList() {
+    let searchListData = await request('/search', {keywords: this.data.searchContent, limit: 10});
+    this.setData({
+      searchList: searchListData.result.songs,
     })
   },
 
