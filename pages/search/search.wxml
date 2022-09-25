@@ -4,7 +4,7 @@
         <view class="searchInput">
             <text class="iconfont icon-sousuo searchIcon"></text>
             <input type="text" value="{{searchContent}}" placeholder="{{placeholderContent}}" placeholder-class="placeholder" bindinput="handleInputChange"/>
-            <text class="clear" bindtap="clearSearchContent">x</text>
+            <text class="clear" bindtap="clearSearchContent" hidden="{{!searchContent}}">x</text>
         </view>
         <text class="cancel">取消</text>
     </view>
@@ -25,13 +25,13 @@
     
     <block wx:else>
         <!-- 搜索历史记录 -->
-        <view class="history">
+        <view class="history" wx:if="{{historyList.length}}">
             <view class="title">历史</view>
             <view class="historyItem" wx:for="{{historyList}}" wx:key="{{item}}">
                 {{item}}
             </view>
             <!-- 删除 -->
-            <text class="iconfont icon-shanchu delete"></text>
+            <text class="iconfont icon-shanchu delete" bindtap="deleteSearchHistory"></text>
         </view>
         <!-- 热搜榜 -->
         <view class="hotContainer">

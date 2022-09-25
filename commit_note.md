@@ -2142,3 +2142,26 @@ handleInputChange(event) {
 
 （但这时候点击叉号没法进入相关回调，考虑元素层级问题，给叉号设置`z-index:10;`即可解决问题）
 
+# sixty-fifth commit
+
+1.删除历史记录：清除页面存储以及本地存储即可，但清除之前，需要弹出对话框，询问用户是否确定：`wx.showModal`
+
+~~~js
+//清空历史搜索记录
+deleteSearchHistory() {
+  wx.showModal({
+    content: '确认删除吗?',
+    success: (res) => {
+      if(res.confirm) {
+        //清空页面存储和本地存储即可
+        this.setData({
+        historyList: [],
+        });
+        wx.removeStorageSync('searchHistory');
+      }
+    }
+  })
+},
+~~~
+
+控制<input>输入框有值时显示叉号，没有值时叉号隐藏，因为切换频繁，不用`wx:if`控制，选择`hidden={{}}`（类似于`v-show`）

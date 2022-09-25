@@ -89,6 +89,22 @@ Page({
     })
   },
 
+  //清空历史搜索记录
+  deleteSearchHistory() {
+    wx.showModal({
+      content: '确认删除吗?',
+      success: (res) => {
+        if(res.confirm) {
+          //清空页面存储和本地存储即可
+          this.setData({
+          historyList: [],
+          });
+          wx.removeStorageSync('searchHistory');
+        }
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
