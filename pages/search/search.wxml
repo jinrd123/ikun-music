@@ -23,6 +23,54 @@
     
     
     <block wx:else>
+        <!-- 搜索历史记录 -->
+        <view class="history">
+            <view class="title">历史</view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <view class="historyItem">
+                你好
+            </view>
+            <!-- 删除 -->
+            <text class="iconfont icon-shanchu delete"></text>
+        </view>
         <!-- 热搜榜 -->
         <view class="hotContainer">
             <view class="title">热搜榜</view>

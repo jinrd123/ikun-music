@@ -2129,3 +2129,7 @@ handleInputChange(event) {
 ## 1.实现搜索列表数据动态展示
 
 ## 2.搜索列表与热歌榜互斥展示----<block>元素结合wx：if，因为搜索列表与搜索历史（未开发）两者作为一个整体与热歌榜有一个互斥关系，<block>元素可以将若干整体合并为<block>一个整体，搭配wx：if、wx：else可以实现互斥展示。
+
+# sixty-third commit
+
+1.历史记录板块静态搭建

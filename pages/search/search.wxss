@@ -86,3 +86,34 @@
     border-bottom: 1rpx solid #eee;
     font-size: 26rpx;
 }
+
+/* 搜索历史记录 */
+.history {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 50rpx;
+    margin: 20rpx 0;
+}
+
+.history .title {
+    font-size: 28rpx;
+    height: 50rpx;
+}
+
+.history .historyItem {
+    height: 50rpx;
+    font-size: 26rpx;
+    background-color: #ededed;
+    margin-left: 20rpx;
+    padding: 0 30rpx;
+    border-radius: 20rpx;
+    margin-bottom: 20rpx;
+}
+
+.history .delete {
+    position: absolute;
+    bottom:  10rpx;
+    right: 15rpx;
+    font-size: 36rpx;
+}
