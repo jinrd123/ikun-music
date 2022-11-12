@@ -64,7 +64,7 @@
             <image src="{{item.song.al.picUrl}}"/>
           </view>
         </scroll-view>
-        <view vx:else>暂无播放记录</view>
+        <view wx:else>暂无播放记录</view>
       </view>
 
       <view class="cardList">
