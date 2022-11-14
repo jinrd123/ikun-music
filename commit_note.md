@@ -2165,3 +2165,106 @@ deleteSearchHistory() {
 ~~~
 
 控制<input>输入框有值时显示叉号，没有值时叉号隐藏，因为切换频繁，不用`wx:if`控制，选择`hidden={{}}`（类似于`v-show`）
+
+# 项目总结
+
+## 封装`wx.request`：
+
+~~~js
+export default (url, data = {}, method = 'GET') => {
+    return new Promise((resolve,reject)=>{
+        wx.request({
+            url: config.host + url;
+            data,
+            method,
+            success(res) {
+                console.log('请求成功：', res);
+                resolve(res.data);
+            },
+            fail(err) {
+                console.log("请求失败：", err);
+                reject(err);
+            }
+        })
+    })
+}
+~~~
+
+**简单作用：**可以提取一些全局配置值（服务器地址，url的前半段）、对参数默认值进行封装之外，携带cookie（见下面相邻登录流程部分）**难点：**wx.request为异步代码，如何返回其请求结果——放在new Promise的执行器中，用resolve返回请求结果。函数调用时搭配await获取请求结果
+
+## 登录流程
+
+前端验证，账号密码格式是否正确（非空、正则匹配...），正确就携带账号密码参数发登录请求，根据后端返回状态码进行对应的提示，如果登录成功进行页面转跳（至个人中心），转跳前需要考虑用户信息的存储，登录成功之后把用户信息存储至本地（`wx.setStorageSync(key, JSON.stringify(result.profile))`）,转跳后在本地存储中读取用户信息（`wx.getStorageSync(key)`，再用`JSON.parse()`转化为对象进行使用）
+
+对于某些请求需要cookie，修改`wx.request`封装：
+
+~~~js
+import config from './config';
+export default (url, data = {}, method = 'GET') => {
+    return new Promise((resolve,reject)=>{
+        wx.request({
+            url: config.host + url,
+            data,
+            method,
+            //有些请求需要cookie信息，所以增加一个请求配置项header，里面携带cookie
+            //经测试，返回的cookie中我们只需要包含MUSIC_U字段的那一个cookie即可
+            header: {
+                cookie: wx.getStorageSync('cookie') ? wx.getStorageSync('cookie').find(item => item.indexOf('MUSIC_U') !== -1) : '',
+            },
+            success(res) {
+                resolve(res.data);
+                //如果发请求是data中有isLogin属性，就说明是登录请求，成功时就需要保存cookies信息
+                if(data.isLogin) {
+                    wx.setStorage({
+                        key: 'cookies',
+                        data: res.cookies
+                    })
+                }
+            },
+            fail(err) {
+                reject(err);
+            }
+        })
+    })
+}
+~~~
+
+然后上面的cookie的保存和携带方式（都写在`wx.request`的封装中）其实是针对后端请求接口返回数据的数据结构的，后端返回的数据对象的结构：
+
+~~~js
+{
+    /*
+    	data和cookie是同级对象
+    */
+	data:{...},
+    cookie:{...},
+}
+~~~
+
+可以和面试官说：后期由于项目返回数据结构的改变，或者直接说，需要考虑后端返回的数据结构，如果cookie存放在`data`内部，那么`wx.request`封装逻辑中也不需要`setStorage`，放到组件中即可
+
+## 三栏布局
+
+`flex:1`即为`flex-grow: 1; flex-shrink: 1; flex-basis: 0%`
+
+其实核心就是父元素`flex`，中栏的元素`flex-grow: 1`
+
+## 视频优化
+
+只渲染一个<video>，其它用<image>，不但优化了渲染效率，而且解决了多个视频同时播放的问题：wx:for遍历生成video时用一个<view>包含`wx:if`和`wx:else`互斥的<video>和<image>，他俩使用同一个`id`，结合组件`data`中的变量（点击了哪个记录它的id）实现。
+
+## 上方导航栏固定效果
+
+下方<scroll-view>通过C3新特性calc计算高度，正好铺满整个屏幕即可（`height: calc(100vh - 152rpx);`152rpx为页面其它元素所有的占用的高度）。
+
+## 路由转跳传query参数
+
+（recommendSong页面转跳songDetail页面传递歌曲id）转跳时query参数直接写在路径里，重点在于接收时需要在`onLoad(options)`用`options`对象进行访问，`options`对象里面的键值对就是路由转跳的query参数键值对。
+
+## 利用pubsub库进行组件页面间通信
+
+recommendSong页面是通过`wx.navigateTo`**（页面不销毁）**转跳至SongDetail页面的，所以两个页面可以进行通信，通信结构：一个页面`Pubsub.subscribe`；一个页面`Pubsub.publish`。songDetail页面拿recommendSong页面的数据一共两轮：第一轮songDetail发布，recommendSong页面订阅；第二轮recommendSong页面发布，songDetail页面订阅。
+
+## 利用App实例在页面销毁时保存信息
+
+songDetail页面点击了返回之后，页面就会进行销毁，这时候歌曲的播放状态得不到保存，小程序页面中，可以用`getApp()`获取App实例，直接创建一个和Page同级的app对象即可，App中也自定义一个对象globalData进行信息存储，页面中利用App对象直接可以访问和修改这个信息对象
