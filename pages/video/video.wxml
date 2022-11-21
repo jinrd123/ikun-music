@@ -1,11 +1,11 @@
 <view class="videoContainer">
     <!-- 头部区域 -->
     <view class="header">
-        <image src="/static/images/video/video.jpg"/>
-        <view class="search">
+        <image src="/static/images/tabs/kun1.png"/>
+        <view class="search" bindtap="toSearch">
             搜索
         </view>
-        <image src="/static/images/logo.png"/>
+        <image src="/static/images/tabs/kun2.png"/>
     </view>
 
     <!-- 导航区域 -->

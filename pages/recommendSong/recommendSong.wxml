@@ -1,7 +1,7 @@
 <view class="recommendSongContainer">
     <!-- 头部区域 -->
     <view class="header">
-        <image src="/static/images/recommendSong/recommendSong.jpg"/>
+        <image src="/static/images/recommendSong/kunkun.jpg"/>
         <view class="date">
             <text class="day">  {{day}} / </text>
             <text class="month"> {{month}}</text>

@@ -7,6 +7,7 @@
 .videoContainer .header image {
     width: 60rpx;
     height: 60rpx;
+    border-radius: 60rpx;
 }
 
 .videoContainer .header .search {
@@ -15,7 +16,7 @@
     margin: 0 20rpx;
     text-align: center;
     line-height: 60rpx;
-    color: #d43c33;
+    color: #545353;
 }
 
 /* 导航区域 */

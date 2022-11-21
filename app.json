@@ -11,7 +11,7 @@
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "window": {
-    "navigationBarBackgroundColor": "#d43c33",
+    "navigationBarBackgroundColor": "#000",
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "ikun音乐"
   },
@@ -24,19 +24,19 @@
         "pagePath": "pages/index/index",
         "text": "主页",
         "iconPath": "/static/images/tabs/tab-home.png",
-        "selectedIconPath": "/static/images/tabs/tab-home-current.png"
+        "selectedIconPath": "/static/images/tabs/basketball.png"
       },
       {
         "pagePath": "pages/video/video",
         "text": "视频",
         "iconPath": "/static/images/tabs/select.png",
-        "selectedIconPath": "/static/images/tabs/selected.png"
+        "selectedIconPath": "/static/images/tabs/basketball.png"
       },
       {
         "pagePath": "pages/personal/personal",
         "text": "个人中心",
         "iconPath": "/static/images/tabs/tab-my.png",
-        "selectedIconPath": "/static/images/tabs/tab-my-current.png"
+        "selectedIconPath": "/static/images/tabs/basketball.png"
       }
     ]
   },

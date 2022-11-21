@@ -6,7 +6,7 @@
             <input type="text" value="{{searchContent}}" placeholder="{{placeholderContent}}" placeholder-class="placeholder" bindinput="handleInputChange"/>
             <text class="clear" bindtap="clearSearchContent" hidden="{{!searchContent}}">x</text>
         </view>
-        <text class="cancel">取消</text>
+        <text class="cancel" bindtap="toVideo">取消</text>
     </view>
 
     <block wx:if="{{searchContent}}">

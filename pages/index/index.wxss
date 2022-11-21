@@ -29,7 +29,7 @@
   border-radius: 50%;
   text-align: center;
   line-height: 100rpx;
-  background-color: rgb(240, 19, 19);
+  background-color: rgb(83, 82, 82);
   font-size: 50rpx;
   margin: 20rpx 0;
   color: #fff;
